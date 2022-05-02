@@ -1,8 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany, BaseEntity} from "typeorm";
 import { Phone } from "./Phone";
 
-@Entity()
-export class Cart {
+@Entity("carts")
+export class Cart extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

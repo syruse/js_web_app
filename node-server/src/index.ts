@@ -1,8 +1,21 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import jwt from 'jsonwebtoken';
+import "reflect-metadata";
+import { User } from "./entity/User";
+import { connectDB } from './connections/db';
 
 require('dotenv').config();
+
+connectDB()
+    .then(() => console.log("DB connection established"))
+    .catch((error) => console.error(error));
+/*
+const user = new User();
+user.name = "Yevhen";
+user.pass = "pass";
+user.email = "email@gmail.com";
+user.save();*/
 
 const port = process.env.PORT;
 const app = express();

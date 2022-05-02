@@ -1,8 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, BaseEntity} from "typeorm";
 import { Cart } from "./Cart";
 
-@Entity()
-export class User {
+@Entity("users")
+export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

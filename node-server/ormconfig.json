@@ -1,11 +1,12 @@
 {
     "type": "mysql",
-    "host": "localhost",
+    "host": "172.31.16.1",
     "port": 3306,
     "username": "root",
     "password": "pass1234!",
     "database": "db",
-    "entities": ["src/entity/*.js"],
+    "entities": ["src/entity/*.ts"],
+    "migrations": ["src/migration/*.ts"],
     "logging": true,
-    "synchronize": false
+    "synchronize": true
 }
