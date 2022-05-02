@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { UserContext } from "./context/user.context";
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
@@ -11,8 +12,13 @@ class GetAll extends Component {
     }
 
     componentDidMount(){
-        console.log("GetAll app mounted")
-        axios.get("http://localhost:8080/api/products/")
+        console.log("GetAll app mounted with token", UserContext.currentUser.token)
+        axios.get("http://localhost:8080/api/phones",
+            {
+                headers: {
+                    'Authorization': `Bearer ${UserContext.currentUser.token}`
+                }
+            })
         .then(res=>{
             console.log("GetAll ", res.data)
             this.setState({products:res.data})

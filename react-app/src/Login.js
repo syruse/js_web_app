@@ -1,4 +1,4 @@
-import { Component, useContext } from "react";
+import { Component } from "react";
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from "./context/user.context";
 
@@ -29,19 +29,18 @@ class Login extends Component {
     }
 
     login(){
-        axios.post("http://172.31.223.23:80/login",
+        axios.post("http://localhost:8080/login",
         {
             email: this.state.email,
             pass: this.state.pass,
         })
-        .then(({data})=>{
-            const { setCurrentUser } = useContext(UserContext);
+        .then( ({data}) => {
             console.log(JSON.stringify(data));
-            setCurrentUser( {token: data.token, user: data.user} );
+            UserContext.currentUser = {token: data.token, user: data.user};
             this.props.navigate("/");
         }).catch((err)=>{
             this.setState({status:"!!!wrong credentials!!!"})
-            console.log("!!!wrong credentials!!!")
+            console.log("!!!wrong credentials!!!" + err)
         })
     }
 

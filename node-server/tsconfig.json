@@ -3,6 +3,8 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
-        "allowJs": true
+        "allowJs": true,
+        "target": "es6",
+        "moduleResolution": "node"
     }
 }
