@@ -1,7 +1,10 @@
 import express from 'express';
 import bodyParser from "body-parser";
+import jwt from 'jsonwebtoken';
 
-const port = 8080;
+require('dotenv').config();
+
+const port = process.env.PORT;
 const app = express();
 
 app.use(bodyParser.json());
