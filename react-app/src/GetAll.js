@@ -2,8 +2,6 @@ import { Component } from "react";
 import { UserContext } from "./context/user.context";
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
-
 class GetAll extends Component {
 
     constructor(props){

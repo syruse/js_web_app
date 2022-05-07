@@ -1,8 +1,6 @@
 import { Component } from "react";
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
-
 class Get extends Component {
 
     constructor(props){
