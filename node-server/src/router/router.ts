@@ -1,6 +1,6 @@
 import express from 'express';
 import auth from '../middleware/auth';
-import GeneralController from '../controller/generalController';
+import { GeneralController, JwtData } from '../controller/generalController';
 import { User } from '../entity/User';
 import logger from '../middleware/logger';
 
@@ -18,8 +18,9 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
         return;
     } else {
         console.log("login succeeded for " + user.email)
-        const token = GeneralController.jwt_sign({ user: user.email });
-        res.send({ token: token, user: { name: user.name, email: user.email} });
+        const data: JwtData = { user: { name: user.name, email: user.email} };
+        const token = GeneralController.jwt_sign(data);
+        res.send({ token: token, data });
     }
 });
 

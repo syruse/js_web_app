@@ -6,7 +6,14 @@ require('dotenv').config();
 
 const saltOrRounds = 10;
 
-export default class GeneralController {
+interface JwtData {
+    user: {
+        name: string,
+        email: string
+    }
+}
+
+class GeneralController {
 
     static async login(email: string, pass: string): Promise<User|undefined> {
         const user = await User.findOne({
@@ -39,8 +46,22 @@ export default class GeneralController {
         }
     }
 
-    static jwt_sign(data: any): string {
-        const token = jwt.sign(data, process.env.JWT_SECRET);
+    static jwt_sign(data: JwtData, secret = process.env.JWT_SECRET): string {
+        const token = jwt.sign(data, secret);
         return token;
     }
+
+    static jwt_verify(token: string, secret = process.env.JWT_SECRET): Promise<JwtData> {
+
+        if( !token ) {
+            throw new Error("jwt decoding wrong token");
+        }
+
+        return new Promise((resolve,reject) =>
+           jwt.verify(token, secret, (err, decoded) => err ? reject(new Error("jwt decoding failed " + err)) : 
+                                                       resolve(decoded as JwtData))
+        );
+    }
 }
+
+export { JwtData, GeneralController };

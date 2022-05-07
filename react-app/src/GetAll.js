@@ -1,6 +1,7 @@
 import { Component } from "react";
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from "./context/user.context";
-import axios from 'axios'
+import { Method, fetch } from "./utils/fetcher"
 
 class GetAll extends Component {
 
@@ -10,15 +11,14 @@ class GetAll extends Component {
     }
 
     componentDidMount(){
+        if (!UserContext.currentUser && typeof UserContext.currentUser.token === 'undefined') {
+            console.log("GetAll app mounted with empty token")
+            this.props.navigate("/login");
+        }
         console.log("GetAll app mounted with token", UserContext.currentUser.token)
-        axios.get("http://localhost:8080/api/phones",
-            {
-                headers: {
-                    'Authorization': `Bearer ${UserContext.currentUser.token}`
-                }
-            })
+        fetch("http://localhost:8080/api/phones", UserContext.currentUser.token, Method.GET)
         .then(res=>{
-            console.log("GetAll ", res.data)
+            console.log("GetAll ", res)
             this.setState({products:res.data})
         }).catch(err=>{
             console.error("error ", err)
@@ -46,4 +46,10 @@ class GetAll extends Component {
     }
 }
 
-export default GetAll;
+/// wrapper for using hooks for components
+function WithNavigate(props) {
+    let navigate = useNavigate();
+    return <GetAll {...props} navigate={navigate} />
+}
+
+export default WithNavigate;

@@ -14,7 +14,7 @@ AppDataSource.initialize().then(async () => {
     const app = express();
 
     /// grant the access to frontend-server
-    app.use(cors({ credentials: true, origin: 'http://localhost:3000'}));
+    app.use(cors({ credentials: true, origin: process.env.FRONTEND}));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(express.static("public"));
