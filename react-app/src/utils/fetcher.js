@@ -2,29 +2,24 @@ import axios from 'axios'
 
 const Method = { GET: 'get', POST: 'post' };
 
-async function fetch(enddoint, token, method) {
+async function fetch(enddoint, token, method, data) {
 
     if (!enddoint || !token || !method) {
         throw new Error("fetch empty parameters");
     }
 
     return new Promise(async (resolve, reject) => {
-        let data = undefined;
+        let result = undefined;
         try {
-            if (method === Method.GET) {
-                data = await axios.get(enddoint,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-            } else if (method === Method.POST) {
-                data = await axios.post(enddoint,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
+            if (method === Method.GET || method === Method.POST) {
+                result = await axios({
+                    method: method,
+                    url: enddoint,
+                    data: data,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
             } else {
                 throw new Error(" invalid method");
             }
@@ -32,7 +27,7 @@ async function fetch(enddoint, token, method) {
             reject(new Error(" error raised during fetching " + error));
         }
 
-        resolve(data);
+        resolve(result);
     });
 };
 

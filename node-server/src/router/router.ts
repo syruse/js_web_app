@@ -27,7 +27,7 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
 router.post('/register', async (req: express.Request, res: express.Response) => {
     console.log("registeration for ")
     const { email, pass, name } = req.body;
-    console.log("registeration for " + email)
+    console.log("registeration for " + email + " " + name);
     const result: boolean = await GeneralController.register(email, pass, name);
     if (!result) {
         res.sendStatus(401);

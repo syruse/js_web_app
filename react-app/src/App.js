@@ -6,6 +6,7 @@ import Get from './Get';
 import Create from './Create';
 import GetAll from './GetAll';
 import Login from './Login';
+import Register from './Register';
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
         <Route path="/create" element={<Create/>}/>
         <Route path="/get" element={<Get/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
       { currentUser && currentUser.user &&
         <Link to="/create">Create</Link>
