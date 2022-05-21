@@ -14,6 +14,23 @@ function App() {
   console.log("currentUser ", JSON.stringify(currentUser));
 
   return (
+    <div className="container">
+      <div className="row">
+        <nav className="navbar navbar-inverse col-sm-10">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <Link className="navbar-brand" to="/">Home</Link>
+            </div>
+            <ul className="nav navbar-nav">
+              {currentUser && currentUser.user &&
+                <li><Link to="/create">Create</Link></li>
+              }
+              <li><Link to="/get">Get</Link></li>
+            </ul>
+          </div>
+        </nav>
+        <div className="col-sm-2 right-col"><Login /></div>
+      </div>
     <div className="App">
       <Routes>
         <Route exact path="/" element={<GetAll/>}/>
@@ -22,13 +39,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
       </Routes>
-      { currentUser && currentUser.user &&
-        <Link to="/create">Create</Link>
-      }
-      <br/>
-      <Link to="/get">Get</Link><br/>
-      <Link to="/">Home</Link><br/>
-      <Link to="/login">Login</Link><br/>
+    </div>
     </div>
   );
 }

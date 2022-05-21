@@ -1,6 +1,5 @@
 import { Component } from "react";
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from "./context/user.context";
 import { Method, fetch } from "./utils/fetcher";
 
 class Register extends Component {
@@ -47,15 +46,32 @@ class Register extends Component {
 
     render(){
         return (
-            <div>
-              Enter name:<input onChange={this.onNameChange} />
-              <br/>
-              Enter email:<input onChange={this.onEmailChange} />
-              <br/>
-              Enter pass:<input onChange={this.onPassChange} />
-              <br/>
-              <button onClick={ () => { this.register() }}>register</button>
-              <br/>{this.state.status}<br/>
+            <div className="form-horizontal">
+              <h2>Registration</h2>
+              <div className="form-group">
+                <label className="control-label col-sm-2" htmlFor="email">Name:</label>
+                <div className="col-sm-10">
+                    <input type="email" className="form-control" onChange={this.onNameChange} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="control-label col-sm-2" htmlFor="email">Email:</label>
+                <div className="col-sm-10">
+                    <input type="email" className="form-control" onChange={this.onEmailChange} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="control-label col-sm-2" htmlFor="pwd">Password:</label>
+                <div className="col-sm-10">          
+                    <input type="password" className="form-control" onChange={this.onPassChange} />
+                </div>
+              </div>
+              <div className="form-group">        
+                <div className="col-sm-offset-2 col-sm-10">
+                    <button type="submit" className="btn btn-default" onClick={ () => { this.register() }}>register</button>
+                </div>
+                <br/>{this.state.status}<br/>
+              </div>
             </div>
           );
     }

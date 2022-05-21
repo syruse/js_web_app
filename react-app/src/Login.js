@@ -43,16 +43,12 @@ class Login extends Component {
 
     render(){
         return (
-            <div>
-              Enter email:<input onChange={this.onEmailChange} />
-              <br/>
-              Enter pass:<input onChange={this.onPassChange} />
-              <br/>
-              <button onClick={this.login.bind(this)}>Log in</button>
+            <div className="form-group form-group-sm">
+              <input className="form-control" placeholder="enter email" onChange={this.onEmailChange} />
+              <input className="form-control" placeholder="enter pass " onChange={this.onPassChange} />
+              <button className="btn btn-default" onClick={this.login.bind(this)}>Log in</button>
+              <button className="btn btn-default" onClick={ () => { this.props.navigate("/register"); }}>Registration</button>
               <br/>{this.state.status}<br/>
-              <br/>
-              <button onClick={ () => { this.props.navigate("/register"); }}>Registration</button>
-              <br/>
             </div>
           );
     }

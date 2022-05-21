@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: rgb(35, 36, 13);
+
+  background-color: #c7b39b;
+  background: url(../public/bg.jpg) no-repeat;
+  /*background-size: cover;*/
+  height: fit-content;
+  /*overflow: hidden*/ /* scrollbar disabling */
 }
 
 code {
