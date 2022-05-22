@@ -1,23 +1,31 @@
 import { Component } from "react";
-import axios from 'axios'
+import { UserContext } from "./context/user.context";
+import { Method, fetch } from "./utils/fetcher"
 
 class Create extends Component {
 
+    static contextType = UserContext;
+
     constructor(props){
         super(props)
-        this.state = {name: {}, desc: {}, price: {}}
+        this.state = {model: {}, desc: {}, price: {}}
     }
 
     componentDidMount(){
-        console.log("Create app mounted")
+        console.log("Create app mounted");
+        if (!this.context.currentUser && typeof this.context.currentUser.token === 'undefined') {
+            console.log("Create app mounted with empty token")
+            this.props.navigate("/");
+        }
+        console.debug("Create app mounted with token", this.context.currentUser.token)
     }
 
     componentDidUpdate(){
         console.log("Create app updated")
     }
 
-    onNameChange = (e) => {
-        this.setState({name:e.target.value})
+    onModelChange = (e) => {
+        this.setState({model:e.target.value})
     }
 
     onDescChange = (e) => {
@@ -29,21 +37,23 @@ class Create extends Component {
     }
 
     createProduct(){
-        axios.post("http://localhost:8080/api/products/",
+        fetch("http://localhost:8080/api/phones", this.context.currentUser.token, Method.POST, 
         {
-            name: this.state.name,
+            model: this.state.model,
             desc: this.state.desc,
             price: this.state.price
         })
         .then(res=>{
-            console.log(res.data)
+            console.log("Create ", res)
+        }).catch(err=>{
+            console.error("error ", err)
         })
     }
 
     render(){
         return (
             <div>
-              Name: <input onChange={this.onNameChange} />
+              Model: <input onChange={this.onModelChange} />
               <br/>
               Description: <input onChange={this.onDescChange} />
               <br/>

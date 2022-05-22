@@ -5,6 +5,8 @@ import { Method, fetch } from "./utils/fetcher";
 
 class Login extends Component {
 
+    static contextType = UserContext;
+
     constructor(props){
         super(props)
         this.state = {email: {}, pass: {}, status: ""}
@@ -33,7 +35,7 @@ class Login extends Component {
         })
         .then( ({data}) => {
             console.log(JSON.stringify(data));
-            UserContext.currentUser = {token: data.token, user: data.user};
+            this.context.setCurrentUser({token: data.token, user: data.data.user});
             this.props.navigate("/");
         }).catch((err)=>{
             this.setState({status:"!!!wrong credentials!!!"})

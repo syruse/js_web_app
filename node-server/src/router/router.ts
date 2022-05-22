@@ -39,8 +39,23 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
 });
 
 router.get('/api/phones', async (req, res) => {
-    console.log("/api/phones " + (req as any).user)
-    res.send((req as any).user);
+    console.log("/api/phones ")
+    const phones = await GeneralController.getPhones();
+    res.send(phones);
+});
+
+router.post('/api/phones', async (req, res) => {
+    console.log("/api/phones ");
+    if ( typeof (req as any).user  === 'undefined') {
+        res.sendStatus(401);
+        console.log("unauthorized request")
+    }
+
+    const { model, desc, price } = req.body;
+    console.log(" phone is bening added " + model + " " + desc + " " + price);
+    const phone = await GeneralController.addPhone(model, desc, price);
+    res.send('OK');
+    console.log("phone adding succeeded id: " + phone.id);
 });
 
 export default router;

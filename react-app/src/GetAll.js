@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from "./context/user.context";
-import { Method, fetch } from "./utils/fetcher"
+import { Method, fetch } from "./utils/fetcher";
 
 class GetAll extends Component {
 
@@ -11,12 +10,8 @@ class GetAll extends Component {
     }
 
     componentDidMount(){
-        if (!UserContext.currentUser && typeof UserContext.currentUser.token === 'undefined') {
-            console.log("GetAll app mounted with empty token")
-            this.props.navigate("/login");
-        }
-        console.log("GetAll app mounted with token", UserContext.currentUser.token)
-        fetch("http://localhost:8080/api/phones", UserContext.currentUser.token, Method.GET)
+        console.log("GetAll app mounted")
+        fetch("http://localhost:8080/api/phones", undefined, Method.GET)
         .then(res=>{
             console.log("GetAll ", res)
             this.setState({products:res.data})
@@ -35,7 +30,7 @@ class GetAll extends Component {
               <h3> Products: </h3>
               <br/>
               {this.state.products.map(product=>(
-              [<h5>Product {product.name}</h5>,
+              [<h5>Product {product.model}</h5>,
               <ul> 
                    <li> product id: {product.id} </li>
                    <li> desc: {product.desc} </li>

@@ -1,4 +1,5 @@
 import { User } from "../entity/User";
+import { Phone } from "../entity/Phone";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -61,6 +62,20 @@ class GeneralController {
            jwt.verify(token, secret, (err, decoded) => err ? reject(new Error("jwt decoding failed " + err)) : 
                                                        resolve(decoded as JwtData))
         );
+    }
+
+    static async getPhones(): Promise<Phone[]> {
+        const phones = await Phone.find();
+        return phones;
+    }
+
+    static async addPhone(model: string, desc: string, price: number): Promise<Phone> {
+        const phone = new Phone;
+        phone.model = model;
+        phone.desc = desc;
+        phone.price = price;
+
+        return await phone.save();
     }
 }
 

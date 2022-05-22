@@ -4,7 +4,7 @@ const Method = { GET: 'get', POST: 'post' };
 
 async function fetch(enddoint, token, method, data) {
 
-    if (!enddoint || !token || !method) {
+    if (!enddoint || !method) {
         throw new Error("fetch empty parameters");
     }
 
