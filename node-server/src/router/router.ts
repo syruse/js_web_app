@@ -48,7 +48,8 @@ router.post('/api/phones', async (req, res) => {
     console.log("/api/phones ", (req as any).user);
     if ( typeof (req as any).user  === 'undefined' || !(req as any).user.is_admin) {
         res.sendStatus(401);
-        console.log("unauthorized request")
+        console.log("unauthorized request");
+        return;
     }
 
     const { model, desc, price } = req.body;

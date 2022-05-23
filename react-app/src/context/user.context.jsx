@@ -6,7 +6,7 @@ export const UserContext = createContext( {
 });
 
 export const UserProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState({ token: undefined, user: undefined/*{ name: 'name', email: 'email'}*/});
+    const [currentUser, setCurrentUser] = useState({ token: undefined, user: undefined/*{ name: 'name', email: 'email', is_admin: false}*/});
     const value = { currentUser, setCurrentUser };
     return <UserContext.Provider value = {value}> {children} </UserContext.Provider>
 }

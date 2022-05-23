@@ -16,22 +16,22 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <nav className="navbar navbar-inverse col-sm-10">
+        <nav className="navbar navbar-inverse col-sm-6 col-sm-offset-4">
           <div className="container-fluid">
             <div className="navbar-header">
               <Link className="navbar-brand" to="/">Home</Link>
             </div>
             <ul className="nav navbar-nav">
-              {currentUser && currentUser.user &&
+              {currentUser && currentUser.user && currentUser.user.is_admin &&
                 <li><Link to="/create">Create</Link></li>
               }
               <li><Link to="/get">Get</Link></li>
             </ul>
           </div>
         </nav>
-        <div className="col-sm-2 right-col"><Login /></div>
+        <div className="col-sm-2"><Login /></div>
       </div>
-    <div className="App">
+    <div>
       <Routes>
         <Route exact path="/" element={<GetAll/>}/>
         <Route path="/create" element={<Create/>}/>

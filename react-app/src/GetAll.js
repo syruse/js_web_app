@@ -26,16 +26,28 @@ class GetAll extends Component {
 
     render(){
         return (
-            <div>
-              <h3> Products: </h3>
-              <br/>
-              {this.state.products.map(product=>(
-              [<h5>Product {product.model}</h5>,
-              <ul> 
-                   <li> product id: {product.id} </li>
-                   <li> desc: {product.desc} </li>
-                   <li> price: {product.price} </li>
-              </ul>]))}
+            <div className="row">
+                <h2 className="text-center" >Products</h2>
+                <table className="table-bordered col-sm-6 col-sm-offset-3">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.products.map(product => (
+                            [
+                                <tr key={product.id*3    }>
+                                    <td key={product.id*4 + 1}> {product.model} </td>
+                                    <td key={product.id*4 + 2}> {product.desc} </td>
+                                    <td key={product.id*4 + 3}> {product.price} </td>
+                                </tr>
+                            ]))
+                        }
+                    </tbody>
+                </table>
             </div>
           );
     }
