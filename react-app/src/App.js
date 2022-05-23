@@ -14,7 +14,7 @@ function App() {
   console.log("currentUser ", JSON.stringify(currentUser));
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <nav className="navbar navbar-inverse col-sm-10">
           <div className="container-fluid">

@@ -10,7 +10,7 @@ export class Phone extends BaseEntity {
     @Column()
     model: string;
 
-    @Column({ type: "decimal", precision: 5, scale: 2 })
+    @Column({ type: "decimal", precision: 12, scale: 2 })
     price: number;
 
     @Column({ type: 'text', nullable: true })

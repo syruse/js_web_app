@@ -18,7 +18,7 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
         return;
     } else {
         console.log("login succeeded for " + user.email)
-        const data: JwtData = { user: { name: user.name, email: user.email} };
+        const data: JwtData = { user: { name: user.name, email: user.email, is_admin: user.is_admin} };
         const token = GeneralController.jwt_sign(data);
         res.send({ token: token, data });
     }
@@ -45,8 +45,8 @@ router.get('/api/phones', async (req, res) => {
 });
 
 router.post('/api/phones', async (req, res) => {
-    console.log("/api/phones ");
-    if ( typeof (req as any).user  === 'undefined') {
+    console.log("/api/phones ", (req as any).user);
+    if ( typeof (req as any).user  === 'undefined' || !(req as any).user.is_admin) {
         res.sendStatus(401);
         console.log("unauthorized request")
     }

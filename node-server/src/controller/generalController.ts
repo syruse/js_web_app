@@ -10,7 +10,8 @@ const saltOrRounds = 10;
 interface JwtData {
     user: {
         name: string,
-        email: string
+        email: string,
+        is_admin: boolean
     }
 }
 

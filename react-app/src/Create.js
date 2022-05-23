@@ -8,7 +8,7 @@ class Create extends Component {
 
     constructor(props){
         super(props)
-        this.state = {model: {}, desc: {}, price: {}}
+        this.state = {model: {}, desc: {}, price: {}, status: ''}
     }
 
     componentDidMount(){
@@ -44,8 +44,10 @@ class Create extends Component {
             price: this.state.price
         })
         .then(res=>{
+            this.setState({status:'Success'})
             console.log("Create ", res)
         }).catch(err=>{
+            this.setState({status:'Adding new phone failed'})
             console.error("error ", err)
         })
     }
@@ -53,14 +55,51 @@ class Create extends Component {
     render(){
         return (
             <div>
-              Model: <input onChange={this.onModelChange} />
-              <br/>
-              Description: <input onChange={this.onDescChange} />
-              <br/>
-              Price: <input onChange={this.onPriceChange} />
-              <br/>
-              <button onClick={this.createProduct.bind(this)}>Create Product</button>
-              <br/>
+                <div className="form-horizontal">
+                    <h2>Phone adding</h2>
+                    <div className="form-group">
+                        <label className="control-label col-sm-2">Model:</label>
+                        <div className="col-sm-10">
+                            <input className="form-control" onChange={this.onModelChange} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-sm-2" >Description:</label>
+                        <div className="col-sm-10">
+                            <input className="form-control" onChange={this.onDescChange} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="control-label col-sm-2" >Price:</label>
+                        <div className="col-sm-10">
+                            <input className="form-control" onChange={this.onPriceChange} />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-sm-offset-2 col-sm-10">
+                            <button type="submit" className="btn btn-default" onClick={this.createProduct.bind(this)}>Create Product</button>
+                        </div>
+                    </div>
+                </div>
+                {this.state.status &&
+                    <div className="modal show" role="dialog">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button type="button" className="close" data-dismiss="modal" onClick={() => { this.setState({ status: '' }) }} >&times;</button>
+                                    <h4 className="modal-title">Status</h4>
+                                </div>
+                                <div className="modal-body">
+                                    <p>{this.state.status}</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-default" data-dismiss="modal" onClick={() => { this.setState({ status: '' }) }} >Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
             </div>
           );
     }
