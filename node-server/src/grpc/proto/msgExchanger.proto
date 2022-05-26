@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package msgExchanger;
+
+message MsgRequest {
+    string msg = 1;
+}
+
+message MsgResponse {
+    string msg = 1;
+}
+
+service msgExchanger {
+    rpc SendMsg (stream MsgRequest) returns (stream MsgResponse);
+}

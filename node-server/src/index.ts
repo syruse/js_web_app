@@ -3,8 +3,25 @@ import bodyParser from "body-parser";
 import { AppDataSource } from './dataSource';
 import cors from 'cors';
 import router from './router/router';
+import { startGrpc, cleanupGrpc } from "./grpc/server"
 
 require('dotenv').config();
+
+let server = undefined;
+
+process.on("SIGINT", async () => {
+    console.log("Caught interrupt signal");
+
+    if(server) {
+        await AppDataSource.destroy();
+        server.close(error => {
+            console.log("server exited ", error ? 1 : 0);
+            cleanupGrpc();
+            process.exit(error ? 1 : 0);
+        });
+    }
+
+})
 
 AppDataSource.initialize().then(async () => {
 
@@ -21,7 +38,10 @@ AppDataSource.initialize().then(async () => {
     app.use('/', router);
 
     console.log("server is waiting for connection on port :", port)
-    app.listen(port);
+    server = app.listen(port);
+
+    startGrpc("localhost:" + process.env.GRPC_PORT);
+    console.log("grpc listening on " + process.env.GRPC_PORT);
 
 
 }).catch(error => console.log(error))
