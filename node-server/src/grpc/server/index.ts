@@ -1,10 +1,13 @@
-const grpc = require('@grpc/grpc-js');
-const msgExchanger = require('../proto/msgExchanger_grpc_pb');
-const msgExchangerImpl = require('./msgExchangerImpl');
+import { Server, ServerCredentials } from '@grpc/grpc-js';
+import { msgExchangerService } from '../proto/msgExchanger_grpc_pb';
+import msgExchangerImpl from './msgExchangerImpl';
 
-const server = new grpc.Server();
+const server = new Server({
+    'grpc.max_receive_message_length': -1,
+    'grpc.max_send_message_length': -1,
+});
 
-const creds = grpc.ServerCredentials.createInsecure();
+const creds = ServerCredentials.createInsecure();
 
 function cleanupGrpc() {
     if(server) {
@@ -13,10 +16,11 @@ function cleanupGrpc() {
 }
 
 export default function startGrpc(port: string) {
-    server.addService(msgExchanger.msgExchangerService, msgExchangerImpl);
-    server.bindAsync(port, creds, (error, _) => {
+    server.addService(msgExchangerService, new msgExchangerImpl());
+    server.bindAsync(port, creds, (error: Error | null, bindPort: number) => {
         if(error) {
-            return cleanupGrpc();
+            cleanupGrpc();
+            throw error;
         }
 
         server.start();

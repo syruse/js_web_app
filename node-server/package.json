@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --watch src --exec 'ts-node' src/index.ts",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
-    "protogen": "node_modules/.bin/grpc_tools_node_protoc --js_out=src/grpc/ --grpc_out=. "
+    "protogen_ts": "node_modules/.bin/grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts  --js_out='import_style=commonjs,binary:.' --ts_out=. --grpc_out=. "
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.6.7",
@@ -29,6 +29,7 @@
     "typeorm": "^0.3.6"
   },
   "devDependencies": {
-    "grpc-tools": "^1.11.2"
+    "grpc-tools": "^1.11.2",
+    "grpc_tools_node_protoc_ts": "^5.3.2"
   }
 }

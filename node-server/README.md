@@ -11,5 +11,6 @@ yarn typeorm migration:run -d src/dataSource.ts
 
 # generate grpc js stuff
 yarn add -D grpc-tools
-yarn protogen ./src/grpc/proto/msgExchanger.proto
+yarn add -D grpc_tools_node_protoc_ts
+yarn protogen_ts ./src/grpc/proto/msgExchanger.proto
 

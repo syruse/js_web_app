@@ -40,7 +40,7 @@ AppDataSource.initialize().then(async () => {
     console.log("server is waiting for connection on port :", port)
     server = app.listen(port);
 
-    startGrpc("localhost:" + process.env.GRPC_PORT);
+    startGrpc(process.env.GRPC_PORT);
     console.log("grpc listening on " + process.env.GRPC_PORT);
 
 

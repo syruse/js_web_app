@@ -2,7 +2,7 @@
 
 'use strict';
 var grpc = require('@grpc/grpc-js');
-var src_grpc_proto_msgExchanger_pb = require('./msgExchanger_grpc_pb');
+var src_grpc_proto_msgExchanger_pb = require('./msgExchanger_pb.js');
 
 function serialize_msgExchanger_MsgRequest(arg) {
   if (!(arg instanceof src_grpc_proto_msgExchanger_pb.MsgRequest)) {
