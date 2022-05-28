@@ -1,5 +1,5 @@
 import { ServerDuplexStream, UntypedHandleCall } from "@grpc/grpc-js";
-import { ImsgExchangerServer, msgExchangerService } from "../proto/msgExchanger_grpc_pb";
+import { ImsgExchangerServer } from "../proto/msgExchanger_grpc_pb";
 import { MsgRequest, MsgResponse } from "../proto/msgExchanger_pb"
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -20,7 +20,7 @@ export default class msgExchangerImpl implements ImsgExchangerServer {
       call.write(res);
     }).on('end', () => 
           call.end()).on('error', (err: Error) => {
-                            console.error('sendMsg:', err.message);
+                          console.error('sendMsg:', err.message);
     });
   }
 }
