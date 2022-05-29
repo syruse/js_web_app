@@ -5,7 +5,7 @@ import { msgExchangerClient } from '../proto/msgExchanger_grpc_pb';
 const creds = grpc.ChannelCredentials.createInsecure();
 
 const client = new msgExchangerClient(
-    'localhost:50051',
+    'localhost:5001',
     creds,
 );
 
@@ -30,7 +30,7 @@ export default function typeMsgToConsultant(msg: string) {
     .on('end', () => console.log('typeMsgToConsultant: End'))
     .on('error', (err: Error) => console.error('typeMsgToConsultant:', err));
 
-    let req: MsgRequest;
+    const req: MsgRequest = new MsgRequest();
     req.setMsg(msg);
     call.write(req);
 }

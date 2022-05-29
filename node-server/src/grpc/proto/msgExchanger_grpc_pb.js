@@ -28,9 +28,31 @@ function deserialize_msgExchanger_MsgResponse(buffer_arg) {
 
 
 var msgExchangerService = exports.msgExchangerService = {
+  ping: {
+    path: '/msgExchanger.msgExchanger/Ping',
+    requestStream: false,
+    responseStream: false,
+    requestType: src_grpc_proto_msgExchanger_pb.MsgRequest,
+    responseType: src_grpc_proto_msgExchanger_pb.MsgResponse,
+    requestSerialize: serialize_msgExchanger_MsgRequest,
+    requestDeserialize: deserialize_msgExchanger_MsgRequest,
+    responseSerialize: serialize_msgExchanger_MsgResponse,
+    responseDeserialize: deserialize_msgExchanger_MsgResponse,
+  },
   sendMsg: {
     path: '/msgExchanger.msgExchanger/SendMsg',
     requestStream: true,
+    responseStream: true,
+    requestType: src_grpc_proto_msgExchanger_pb.MsgRequest,
+    responseType: src_grpc_proto_msgExchanger_pb.MsgResponse,
+    requestSerialize: serialize_msgExchanger_MsgRequest,
+    requestDeserialize: deserialize_msgExchanger_MsgRequest,
+    responseSerialize: serialize_msgExchanger_MsgResponse,
+    responseDeserialize: deserialize_msgExchanger_MsgResponse,
+  },
+  sendMsg_grpc_web: {
+    path: '/msgExchanger.msgExchanger/SendMsg_grpc_web',
+    requestStream: false,
     responseStream: true,
     requestType: src_grpc_proto_msgExchanger_pb.MsgRequest,
     responseType: src_grpc_proto_msgExchanger_pb.MsgResponse,

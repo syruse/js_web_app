@@ -14,5 +14,7 @@ message MsgResponse {
 }
 
 service msgExchanger {
+    rpc Ping (MsgRequest) returns (MsgResponse);
     rpc SendMsg (stream MsgRequest) returns (stream MsgResponse);
+    rpc SendMsg_grpc_web (MsgRequest) returns (stream MsgResponse);
 }
