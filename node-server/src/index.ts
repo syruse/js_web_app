@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import { AppDataSource } from './dataSource';
 import cors from 'cors';
 import router from './router/router';
-import { startGrpc, cleanupGrpc } from "./grpc/server"
+import { startGrpc, cleanupGrpc } from "./grpc/server";
 
 require('dotenv').config();
 
@@ -42,6 +42,5 @@ AppDataSource.initialize().then(async () => {
 
     startGrpc(process.env.GRPC_PORT);
     console.log("grpc listening on " + process.env.GRPC_PORT);
-
 
 }).catch(error => console.log(error))

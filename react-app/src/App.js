@@ -7,8 +7,17 @@ import Create from './Create';
 import GetAll from './GetAll';
 import Login from './Login';
 import Register from './Register';
+import {typeMsg} from './utils/grpcClient';
 
 function App() {
+
+  typeMsg(" potential client ", "token", (isOk, reply) => {
+    if (!isOk) {
+      console.error("chat broken ", reply);
+    } else {
+      console.log("repply of consultant ", reply);
+    }
+  });
   
   const { currentUser } = useContext(UserContext);
   console.log("currentUser ", JSON.stringify(currentUser));
