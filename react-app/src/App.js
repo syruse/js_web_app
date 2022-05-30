@@ -7,17 +7,9 @@ import Create from './Create';
 import GetAll from './GetAll';
 import Login from './Login';
 import Register from './Register';
-import {typeMsg} from './utils/grpcClient';
+import Chat from './Chat';
 
 function App() {
-
-  typeMsg(" potential client ", "token", (isOk, reply) => {
-    if (!isOk) {
-      console.error("chat broken ", reply);
-    } else {
-      console.log("repply of consultant ", reply);
-    }
-  });
   
   const { currentUser } = useContext(UserContext);
   console.log("currentUser ", JSON.stringify(currentUser));
@@ -40,15 +32,19 @@ function App() {
         </nav>
         <div className="col-sm-2"><Login /></div>
       </div>
-    <div>
-      <Routes>
-        <Route exact path="/" element={<GetAll/>}/>
-        <Route path="/create" element={<Create/>}/>
-        <Route path="/get" element={<Get/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
-      </Routes>
-    </div>
+      <div>
+        <Routes>
+          <Route exact path="/" element={<GetAll />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/get" element={<Get />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+      <div className="footer panel panel-success" >
+        <div className="panel-heading">Chat with consultant</div>
+        <div className="panel-body"> <Chat /></div>
+      </div>
     </div>
   );
 }

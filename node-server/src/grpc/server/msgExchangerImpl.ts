@@ -1,4 +1,5 @@
-import { ServerUnaryCall, ServerDuplexStream, ServerWritableStream, sendUnaryData, UntypedHandleCall } from "@grpc/grpc-js";
+import { ServerUnaryCall, ServerDuplexStream, ServerWritableStream,
+   sendUnaryData, UntypedHandleCall, MetadataValue } from "@grpc/grpc-js";
 import { ImsgExchangerServer } from "../proto/msgExchanger_grpc_pb";
 import { MsgRequest, MsgResponse } from "../proto/msgExchanger_pb"
 
@@ -12,8 +13,15 @@ export default class msgExchangerImpl implements ImsgExchangerServer {
 
   ping(call: ServerUnaryCall<MsgRequest, MsgResponse>, callback: sendUnaryData<MsgResponse>): void {
     console.log('ping was invoked');
+    const token: string | undefined = function (meta: MetadataValue[]) {
+      if (meta?.length) {
+        return meta[0].toString().split(' ')[1];
+      } else {
+        return undefined;
+      }
+    }(call.metadata.get("Authorization"));
     const msg: string = call.request.getMsg();
-    console.log(`Received request: ${msg}`);
+    console.log(`Received request: ${msg} ${token}`);
     const res = new MsgResponse().setMsg(`Hello, I am bot \n please type your request`);
 
     callback(null, res);
@@ -23,12 +31,14 @@ export default class msgExchangerImpl implements ImsgExchangerServer {
     console.log('sendMsg_grpc_web was invoked');
     const msg: string = call.request.getMsg();
     console.log(`Received request: ${msg}`);
-    const res = new MsgResponse()
-          .setMsg(`agry with your request ${msg}, anything else?`);
 
-    // some delay before replying
-    await sleep(3000);
-    call.write(res);
+    for (const reply of [` you typed ${msg} `, " I agry with your request ", "anything else?"]) {
+      const res = new MsgResponse()
+      .setMsg(reply);
+      // some delay before replying
+      await sleep(3000);
+      call.write(res);
+    }
 
     // TODO: hoist chat interrupting to some function
     // call.end();
