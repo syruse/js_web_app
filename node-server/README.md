@@ -18,3 +18,6 @@ yarn protogen_ts ./src/grpc/proto/msgExchanger.proto
 yarn protogen_web ./src/grpc/proto/msgExchanger.proto
 ln -s /project/node-server/src/grpc/proto /project/react-app/src/grpc
 
+# run docker image building
+docker build -t eamalafeev/node-grpc-server .
+docker run --name node_grpc_server -p 8080:8080 -d eamalafeev/node-grpc-server
