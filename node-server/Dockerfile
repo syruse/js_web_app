@@ -14,8 +14,6 @@ RUN yarn global add nodemon ts-node typescript
 
 RUN yarn
 
-RUN yarn typeorm migration:run -d src/dataSource.ts
-
 EXPOSE 8080
 
 CMD [ "yarn", "start" ]
