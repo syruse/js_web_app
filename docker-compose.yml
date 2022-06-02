@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 networks:
   internal_network:
 # network created by docker, you can bind to yourr by 'external: true'
@@ -39,9 +39,9 @@ services:
       - "8080:8080"
       - "5001:5001"
     volumes:
-      - ./node-server/src:/project/node-server/src
-      - ./node-server/package.json:/project/node-server/package.json
-      - ./node-server/.env:/project/node-server/.env
+      - ./node-server/src:/project/node-server/src:ro
+      - ./node-server/package.json:/project/node-server/package.json:rw
+      - ./node-server/.env:/project/node-server/.env:ro
     depends_on:
       - grpc_proxy
   frontend:
@@ -50,7 +50,7 @@ services:
       internal_network:
         ipv4_address: 172.20.0.8
     volumes:
-      - ./react-app/src:/project/react-app/src
+      - ./react-app/src:/project/react-app/src:ro
       - ./react-app/package.json:/project/react-app/package.json
     depends_on:
       - grpc_proxy
