@@ -30,6 +30,18 @@ services:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
     depends_on:
       - db
+  redis:
+    image: "redis:7.0.1-alpine"
+    networks:
+      internal_network:
+        ipv4_address: 172.20.0.9
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/etc/redis.conf
+    command: redis-server /etc/redis.conf
+    depends_on:
+      - backend
   backend:
     build: ./node-server/
     networks:
@@ -41,6 +53,7 @@ services:
     volumes:
       - ./node-server/src:/project/node-server/src:ro
       - ./node-server/package.json:/project/node-server/package.json:rw
+      - ./node-server/yarn.lock:/project/node-server/yarn.lock:rw
       - ./node-server/.env:/project/node-server/.env:ro
     depends_on:
       - grpc_proxy

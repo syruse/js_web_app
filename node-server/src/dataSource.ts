@@ -15,4 +15,12 @@ export const AppDataSource = new DataSource({
     entities: ["src/entity/*.ts"],
     migrations: ["src/migration/*.ts"],
     subscribers: [],
+    cache: {
+        type: "redis",
+        options: {
+            host: process.env.REDIS_HOST_IP,
+            port: process.env.REDIS_PORT,
+            password: process.env.REDIS_PASS          
+        }
+    }
 });

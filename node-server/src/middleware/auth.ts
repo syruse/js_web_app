@@ -1,5 +1,4 @@
 import * as express from 'express';
-import jwt from 'jsonwebtoken';
 import { GeneralController, JwtData } from '../controller/generalController';
 
 require('dotenv').config();

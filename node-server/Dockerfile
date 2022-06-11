@@ -12,7 +12,8 @@ USER node
 
 RUN yarn global add nodemon ts-node typescript
 
-RUN yarn
+#RUN yarn --production
+RUN yarn install --frozen-lockfile
 
 EXPOSE 8080
 

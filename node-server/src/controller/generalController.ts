@@ -2,6 +2,7 @@ import { User } from "../entity/User";
 import { Phone } from "../entity/Phone";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { AppDataSource } from '../dataSource';
 
 require('dotenv').config();
 
@@ -66,7 +67,12 @@ class GeneralController {
     }
 
     static async getPhones(): Promise<Phone[]> {
-        const phones = await Phone.find();
+        const phones = await Phone.find({
+            cache: {
+                id: "phones",
+                milliseconds: 600000 // 10 min
+            }
+        });
         return phones;
     }
 
@@ -75,6 +81,8 @@ class GeneralController {
         phone.model = model;
         phone.desc = desc;
         phone.price = price;
+
+        AppDataSource.queryResultCache?.remove(["phones"]);
 
         return await phone.save();
     }
