@@ -41,7 +41,7 @@ services:
       - ./redis.conf:/etc/redis.conf
     command: redis-server /etc/redis.conf
     depends_on:
-      - backend
+      - grpc_proxy
   backend:
     build: ./node-server/
     networks:
@@ -54,9 +54,15 @@ services:
       - ./node-server/src:/project/node-server/src:ro
       - ./node-server/package.json:/project/node-server/package.json:rw
       - ./node-server/yarn.lock:/project/node-server/yarn.lock:rw
+      - ./node-server/tsconfig.json:/project/node-server/tsconfig.json:ro
       - ./node-server/.env:/project/node-server/.env:ro
+      - ./node-server/.env:/project/node-server/build/.env:ro
+      # comment node_modules sharing for production 
+      - ./node-server/node_modules:/project/node-server/node_modules:rw
     depends_on:
       - grpc_proxy
+      - db
+      - redis
   frontend:
     build: ./react-app/
     networks:
@@ -67,5 +73,6 @@ services:
       - ./react-app/package.json:/project/react-app/package.json
     depends_on:
       - grpc_proxy
+      - backend
     ports:
       - "3000:3000"

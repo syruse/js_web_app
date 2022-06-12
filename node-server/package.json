@@ -5,7 +5,8 @@
   "author": "s_y_r_u_s_e",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --watch src --exec 'ts-node' src/index.ts",
+    "startTSserver": "nodemon --watch src --exec 'ts-node' src/index.ts",
+    "startJSserver": "tsc --project tsconfig.json && cd build && nodemon src/index.js",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "protogen_ts": "node_modules/.bin/grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-ts  --js_out='import_style=commonjs,binary:.' --ts_out=. --grpc_out=. ",
     "protogen_web": "node_modules/.bin/grpc_tools_node_protoc --plugin=node_modules/.bin/protoc-gen-grpc-web  --js_out='import_style=commonjs:.' --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. "
@@ -26,12 +27,12 @@
     "typeorm": "^0.3.6"
   },
   "devDependencies": {
-    "grpc-tools": "^1.11.2",
-    "grpc_tools_node_protoc_ts": "^5.3.2",
     "@types/body-parser": "^1.19.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^17.0.31"
+    "@types/node": "^17.0.31",
+    "grpc-tools": "^1.11.2",
+    "grpc_tools_node_protoc_ts": "^5.3.2"
   }
 }

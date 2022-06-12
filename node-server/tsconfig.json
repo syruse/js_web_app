@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "outDir": "./build/src/",
+        "module": "commonjs",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
@@ -8,5 +10,8 @@
         "moduleResolution": "node",
         "strictNullChecks": false,
         "noEmitOnError": true
-    }
+    },
+    "include": [
+        "src/**/*"
+    ]
 }

@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm";
+import RedisQueryResultCache from "./RedisQueryResultCache";
 require('dotenv').config();
 
 export const AppDataSource = new DataSource({
@@ -12,15 +13,14 @@ export const AppDataSource = new DataSource({
     synchronize: false,
     logging: false,
     migrationsRun: true,
-    entities: ["src/entity/*.ts"],
-    migrations: ["src/migration/*.ts"],
+    entities: ["src/entity/*"],
+    migrations: ["src/migration/*"],
     subscribers: [],
     cache: {
         type: "redis",
-        options: {
-            host: process.env.REDIS_HOST_IP,
-            port: process.env.REDIS_PORT,
-            password: process.env.REDIS_PASS          
+        provider(_){
+            return new RedisQueryResultCache(process.env.REDIS_HOST_IP, 
+                parseInt(process.env.REDIS_PORT), process.env.REDIS_PASS);
         }
     }
 });
