@@ -8,17 +8,19 @@ WORKDIR /project/node-server
 
 COPY . .
 
+COPY .env build/
+
 COPY --chown=node:node . .
 
-#change on USER node for production
-USER root
+USER node
 
-RUN yarn global add nodemon ts-node typescript
+RUN yarn global add nodemon typescript
 
 # RUN yarn --production #without dev dependancies
 RUN yarn install --frozen-lockfile
 
+RUN yarn buildJSserver
+
 EXPOSE 8080
 
-#change on startJSserver for production
-CMD [ "yarn", "startTSserver" ]
+CMD [ "yarn", "startJSserver" ]

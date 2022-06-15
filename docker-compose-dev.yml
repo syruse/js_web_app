@@ -35,25 +35,35 @@ services:
     networks:
       internal_network:
         ipv4_address: 172.20.0.9
+    ports:
+      - "6379:6379"
     volumes:
       - ./redis.conf:/etc/redis.conf
     command: redis-server /etc/redis.conf
     depends_on:
       - grpc_proxy
   backend:
-    build: ./node-server/
+    build: ./node-server/Dockerfile.dev
     networks:
       internal_network:
         ipv4_address: 172.20.0.6
     ports:
       - "8080:8080"
       - "5001:5001"
+    volumes:
+      - ./node-server/src:/project/node-server/src:ro
+      - ./node-server/package.json:/project/node-server/package.json:rw
+      - ./node-server/yarn.lock:/project/node-server/yarn.lock:rw
+      - ./node-server/tsconfig.json:/project/node-server/tsconfig.json:ro
+      - ./node-server/.env:/project/node-server/.env:ro
+      - ./node-server/.env:/project/node-server/build/.env:ro
+      - ./node-server/node_modules:/project/node-server/node_modules:rw
     depends_on:
       - grpc_proxy
       - db
       - redis
   frontend:
-    build: ./react-app/
+    build: ./react-app/Dockerfile.dev
     networks:
       internal_network:
         ipv4_address: 172.20.0.8
