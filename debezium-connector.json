@@ -1,0 +1,25 @@
+{
+    "name":"db-connector",
+    "config": {
+        "auto.create.topics.enable":"true",
+        "connector.class":"io.debezium.connector.mysql.MySqlConnector",
+        "converter.schemas.enable": false,
+        "database.hostname":"172.20.0.5",
+        "database.port":"3306",
+        "database.user":"root",
+        "database.password":"pass1234!",
+        "database.server.id":"1",
+        "database.include.list":"db",
+        "database.server.name":"db",
+        "database.history.kafka.bootstrap.servers":"172.20.0.12:9092",
+        "database.history.kafka.topic":"dbhistory.db",
+        "database.serverTimezone":"Etc/UTC",
+        "decimal.handling.mode": "string",
+        "snapshot.mode": "when_needed",
+        "table.include.list":"db.phones",
+        "topic.creation.default.replication.factor": 1,
+        "topic.creation.default.partitions": 10,
+        "topic.creation.default.cleanup.policy": "compact",
+        "topic.creation.default.compression.type": "gzip"
+    }
+}

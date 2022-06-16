@@ -19,6 +19,8 @@ services:
       - MYSQL_PASSWORD=pass1234!
       - MYSQL_USER=user
       - MYSQL_DATABASE=db
+    volumes:
+      - ./50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf:ro
   grpc_proxy:
     image: "envoyproxy/envoy:v1.21-latest"
     networks:
@@ -40,6 +42,68 @@ services:
     command: redis-server /etc/redis.conf
     depends_on:
       - grpc_proxy
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+    networks:
+      internal_network:
+        ipv4_address: 172.20.0.13
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+      - 9092:9092
+    networks:
+      internal_network:
+        ipv4_address: 172.20.0.12
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,LISTENER_DOCKER_EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
+      KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "true"
+  debezium:
+    image: debezium/connect:latest
+    platform: 'linux/amd64'
+    depends_on:
+      - kafka
+    ports:
+      - 8083:8083
+    networks:
+      internal_network:
+        ipv4_address: 172.20.0.11
+    environment:
+        CONFIG_STORAGE_TOPIC: my_connect_configs
+        OFFSET_STORAGE_TOPIC: my_connect_offsets
+        STATUS_STORAGE_TOPIC: my_connect_statuses
+        BOOTSTRAP_SERVERS: kafka:9092
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    ports:
+      - 8085:8085
+    hostname: schema-registry
+    depends_on:
+    - kafka
+    - zookeeper
+    - debezium
+    networks:
+      internal_network:
+        ipv4_address: 172.20.0.10
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://localhost:8085
   backend:
     build: ./node-server/
     networks:
@@ -52,6 +116,10 @@ services:
       - grpc_proxy
       - db
       - redis
+      - zookeeper
+      - kafka
+      - debezium
+      - schema-registry
   frontend:
     build: ./react-app/
     networks:
