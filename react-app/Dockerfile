@@ -12,6 +12,10 @@ USER node
 
 RUN yarn
 
+RUN yarn global add serve
+
+RUN yarn build
+
 EXPOSE 3000
 
-CMD [ "yarn", "build" ]
+CMD [ "yarn", "startRelease" ]
