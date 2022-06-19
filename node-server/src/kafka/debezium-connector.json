@@ -18,8 +18,16 @@
         "snapshot.mode": "when_needed",
         "table.include.list":"db.phones",
         "topic.creation.default.replication.factor": 1,
-        "topic.creation.default.partitions": 10,
+        "topic.creation.default.partitions": 3,
         "topic.creation.default.cleanup.policy": "compact",
-        "topic.creation.default.compression.type": "gzip"
+        "topic.creation.default.compression.type": "gzip",
+        "key.converter.schema.registry.url": "http://172.20.0.10:8081",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url": "http://172.20.0.10:8081",
+        "internal.key.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "internal.value.converter":"org.apache.kafka.connect.json.JsonConverter",
+        "internal.key.converter.schemas.enable":"false",
+        "internal.value.converter.schemas.enable":"false"
     }
 }

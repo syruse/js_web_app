@@ -1,0 +1,14 @@
+{
+    "topic": "db.db.phones",
+    "type": "debezium",
+    "schema": {
+        "type": "record",
+        "name": "phones",
+        "fields": [
+            {"name": "id", "type": "int"},
+            {"name": "model", "type": "string"},
+            {"name": "price", "type": "float"},
+            {"name": "desc", "type": "string"}
+        ]
+    }
+}

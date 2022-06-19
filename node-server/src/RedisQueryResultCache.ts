@@ -7,8 +7,8 @@ export default class RedisQueryResultCache implements QueryResultCache {
     private mRedisClient:RedisClientType;
     constructor(hostIp:string, port:number, password?:string) {
         this.mRedisClient = createClient({
-            url: `redis://@${process.env.REDIS_HOST_IP}:${process.env.REDIS_PORT}`,
-            password: process.env.REDIS_PASS
+            url: `redis://@${hostIp}:${port}`,
+            password: password
         });
 
         this.mRedisClient.on('error', (err) => console.log('Redis Client Error', err));

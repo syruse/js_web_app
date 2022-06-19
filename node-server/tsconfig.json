@@ -10,7 +10,8 @@
         "lib": ["es2017"],
         "moduleResolution": "node",
         "strictNullChecks": false,
-        "noEmitOnError": true
+        "noEmitOnError": true,
+        "resolveJsonModule": true
     },
     "include": [
         "src/**/*"

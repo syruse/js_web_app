@@ -105,9 +105,11 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_LISTENERS: http://localhost:8085
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8085, http://172.20.0.10:8081
   backend:
-    build: ./node-server/Dockerfile.dev
+    build: 
+      context: ./node-server/
+      dockerfile: Dockerfile.dev
     networks:
       internal_network:
         ipv4_address: 172.20.0.6
@@ -131,7 +133,9 @@ services:
       - debezium
       - schema-registry
   frontend:
-    build: ./react-app/Dockerfile.dev
+    build:
+      context: ./react-app/
+      dockerfile: Dockerfile.dev
     networks:
       internal_network:
         ipv4_address: 172.20.0.8

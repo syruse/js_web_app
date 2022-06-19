@@ -103,7 +103,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      SCHEMA_REGISTRY_LISTENERS: http://localhost:8085
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8085, http://172.20.0.10:8081
   backend:
     build: ./node-server/
     networks:
