@@ -1,7 +1,20 @@
 import "reflect-metadata"
-import { DataSource } from "typeorm";
+import { DataSource, BaseEntity } from "typeorm";
 import RedisQueryResultCache from "./RedisQueryResultCache";
+import {validate} from "class-validator";
 require('dotenv').config();
+
+// smart saving injection
+const save = BaseEntity.prototype.save;
+BaseEntity.prototype.save = async function() {
+    console.debug("validation being executed before saving");
+    const errors = await validate(this);
+    if (errors.length > 0) {
+        const msg = errors.reduce((previousValue, currentValue) => previousValue + currentValue.toString(), "");
+        throw new Error("wrong input "+ msg);
+    }
+    return await save.apply(this, arguments);
+}
 
 export const AppDataSource = new DataSource({
     type: "mariadb",

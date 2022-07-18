@@ -28,13 +28,13 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
     console.log("registeration for ")
     const { email, pass, name } = req.body;
     console.log("registeration for " + email + " " + name);
-    const result: boolean = await GeneralController.register(email, pass, name);
-    if (!result) {
-        res.sendStatus(401);
-        console.log("registration failed for " + email);
-    } else {
+    try {
+        await GeneralController.register(email, pass, name);
         res.send('OK');
         console.log("registration succeeded for " + email);
+    } catch (error) {
+        res.status(400).send(error.message);
+        console.log("registration failed for " + email);
     }
 });
 
@@ -54,9 +54,14 @@ router.post('/api/phones', async (req, res) => {
 
     const { model, desc, price } = req.body;
     console.log(" phone is bening added " + model + " " + desc + " " + price);
-    const phone = await GeneralController.addPhone(model, desc, price);
-    res.send('OK');
-    console.log("phone adding succeeded id: " + phone.id);
+    try {
+        const phone = await GeneralController.addPhone(model, desc, price);
+        res.send('OK');
+        console.log("phone adding succeeded id: " + phone.id);
+    } catch (error) {
+        res.status(400).send(error.message);
+        console.log("phone adding failed for " + model);
+    }
 });
 
 export default router;

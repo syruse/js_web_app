@@ -2,7 +2,6 @@ import { User } from "../entity/User";
 import { Phone } from "../entity/Phone";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { AppDataSource } from '../dataSource';
 
 require('dotenv').config();
 
@@ -29,7 +28,7 @@ class GeneralController {
         return isMatch ? user : undefined;
     }
 
-    static async register(email: string, pass: string, name: string): Promise<boolean> {
+    static async register(email: string, pass: string, name: string): Promise<void> | never {
         const user = await User.findOne({
             where: {
                 email: email
@@ -37,15 +36,20 @@ class GeneralController {
         });
         // check whether the email address already registered
         if (user) {
-            return false;
+            throw new Error("no such user " + email);
         } else {
             const hash = await bcrypt.hash(pass, saltOrRounds);
             const user = new User();
             user.email = email;
             user.name = name;
             user.pass = hash;
-            await user.save();
-            return true;
+            user.date = new Date().toISOString().slice(0, 10); // get only first 10 chars (date only): 2022-07-18T19:01:30.508Z
+            try {
+                await user.save();
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
         }
     }
 
@@ -76,15 +80,18 @@ class GeneralController {
         return phones;
     }
 
-    static async addPhone(model: string, desc: string, price: number): Promise<Phone> {
+    static async addPhone(model: string, desc: string, price: number): Promise<Phone> | never {
         const phone = new Phone;
         phone.model = model;
         phone.desc = desc;
         phone.price = price;
 
-        AppDataSource.queryResultCache?.remove(["phones"]);
-
-        return await phone.save();
+        try {
+            return await phone.save();
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 }
 

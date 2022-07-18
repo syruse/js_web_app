@@ -24,7 +24,7 @@ async function fetch(enddoint, token, method, data) {
                 throw new Error(" invalid method");
             }
         } catch (error) {
-            reject(new Error(" error raised during fetching " + error));
+            reject(new Error(" error raised during fetching " + error?.response?.data));
         }
 
         resolve(result);

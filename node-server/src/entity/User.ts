@@ -1,5 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, BaseEntity} from "typeorm";
-import {IsEmail, IsDate} from "class-validator";
+import {IsEmail, IsDateString} from "class-validator";
 import { Cart } from "./Cart";
 
 @Entity("users")
@@ -22,13 +22,10 @@ export class User extends BaseEntity {
     is_admin: boolean;
 
     @Column({ type: 'date', nullable: true })
-    @IsDate()
+    @IsDateString()
     date: string;
 
     @OneToOne(type => Cart) @JoinColumn() 
     cart: Cart;
 
 }
-
-
-// TODO: to add validation

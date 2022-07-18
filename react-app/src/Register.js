@@ -39,7 +39,7 @@ class Register extends Component {
             console.log(JSON.stringify(data));
             this.props.navigate("/login");
         }).catch((err)=>{
-            this.setState({status:"Couldn't register :("})
+            this.setState({status:"Couldn't register :( " + err})
             console.log("Couldn't register " + err)
         })
     }
