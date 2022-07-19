@@ -12,7 +12,7 @@ import Chat from './Chat';
 function App() {
   
   const { currentUser } = useContext(UserContext);
-  console.log("currentUser ", JSON.stringify(currentUser));
+  console.debug("currentUser ", JSON.stringify(currentUser));
 
   return (
     <div className="container-fluid">

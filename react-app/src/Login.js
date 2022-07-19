@@ -13,11 +13,11 @@ class Login extends Component {
     }
 
     componentDidMount(){
-        console.log("Login app mounted")
+        console.debug("Login app mounted")
     }
 
     componentDidUpdate(){
-        console.log("Login app updated")
+        console.debug("Login app updated")
     }
 
     onEmailChange = (e) => {
@@ -34,13 +34,13 @@ class Login extends Component {
             pass: this.state.pass,
         })
         .then( ({data}) => {
-            console.log(JSON.stringify(data));
+            console.debug(JSON.stringify(data));
             this.context.setCurrentUser({token: data.token, user: data.data.user});
             this.setState({isNOKpopup:false})
             this.props.navigate("/");
         }).catch((err)=>{
             this.setState({isNOKpopup:true})
-            console.log("!!!wrong credentials!!!" + err)
+            console.debug("!!!wrong credentials!!!" + err)
         })
     }
 

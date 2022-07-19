@@ -12,16 +12,16 @@ class Create extends Component {
     }
 
     componentDidMount(){
-        console.log("Create app mounted");
+        console.debug("Create app mounted");
         if (!this.context.currentUser && typeof this.context.currentUser.token === 'undefined') {
-            console.log("Create app mounted with empty token")
+            console.debug("Create app mounted with empty token")
             this.props.navigate("/");
         }
         console.debug("Create app mounted with token", this.context.currentUser.token)
     }
 
     componentDidUpdate(){
-        console.log("Create app updated")
+        console.debug("Create app updated")
     }
 
     onModelChange = (e) => {
@@ -45,7 +45,7 @@ class Create extends Component {
         })
         .then(res=>{
             this.setState({status:'Success'})
-            console.log("Create ", res)
+            console.debug("Create ", res)
         }).catch(err=>{
             this.setState({status:'Adding new phone failed'})
             console.error("error ", err)

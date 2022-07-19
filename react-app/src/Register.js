@@ -10,11 +10,11 @@ class Register extends Component {
     }
 
     componentDidMount(){
-        console.log("Register app mounted")
+        console.debug("Register app mounted")
     }
 
     componentDidUpdate(){
-        console.log("Register app updated")
+        console.debug("Register app updated")
     }
 
     onNameChange = (e) => {
@@ -36,11 +36,11 @@ class Register extends Component {
             name: this.state.name,
         })
         .then( ({data}) => {
-            console.log(JSON.stringify(data));
+            console.debug(JSON.stringify(data));
             this.props.navigate("/login");
         }).catch((err)=>{
             this.setState({status:"Couldn't register :( " + err})
-            console.log("Couldn't register " + err)
+            console.debug("Couldn't register " + err)
         })
     }
 

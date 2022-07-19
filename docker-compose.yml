@@ -9,7 +9,7 @@ networks:
 services:
   db:
     image: "mariadb:10.8"
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --log-bin
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --log-bin=mysqld-bin
     networks:
       internal_network:
         ipv4_address: 172.20.0.5

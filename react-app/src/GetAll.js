@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
 import { Method, fetch } from "./utils/fetcher";
 import { addItem } from "./store/cart/cart-action"
 
@@ -8,16 +8,13 @@ class GetAll extends Component {
     constructor(props){
         super(props)
         this.state = {products: []}
-        const unsubscribe = store.subscribe(() =>
-            console.debug(store.getState())
-        )
     }
 
     componentDidMount(){
-        console.log("GetAll app mounted")
+        console.debug("GetAll app mounted")
         fetch("http://localhost:8080/api/phones", undefined, Method.GET)
         .then(res=>{
-            console.log("GetAll ", res)
+            console.debug("GetAll ", res)
             this.setState({products:res.data})
         }).catch(err=>{
             console.error("error ", err)
@@ -25,12 +22,13 @@ class GetAll extends Component {
     }
 
     componentDidUpdate(){
-        console.log("GetAll app updated")
+        console.debug("GetAll app updated with current cart" + JSON.stringify(this.props.cart))
     }
 
     buy(productId){
-        console.log("buy " + productId)
-        store.dispatch(addItem({productId: productId}))
+        const { addPhone } = this.props;
+        console.debug("buy " + productId)
+        addPhone(productId, 1)
     }
 
     render(){
@@ -66,9 +64,22 @@ class GetAll extends Component {
 }
 
 /// wrapper for using hooks for components
-function WithNavigate(props) {
-    let navigate = useNavigate();
-    return <GetAll {...props} navigate={navigate} />
+/*function WithNavigate(props) {
+    const navigate = useNavigate();
+    const cart = useSelector((state) => state.cart)
+    const dispatch = useDispatch()
+    const addPhone = (productId) => dispatch(addItem({productId: productId}))
+    return <GetAll {...props} navigate={navigate} cart={cart} addPhone={addPhone} />
 }
 
-export default WithNavigate;
+export default WithNavigate;*/
+
+const mapStateToProps = (state) => ({
+    cart: state.cart,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    addPhone: (productId, amount) => dispatch(addItem({productId: productId, amount: amount}))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetAll);

@@ -29,7 +29,7 @@ class Chat extends Component {
             if (!isOk) {
               console.error("chat broken ", reply);
             } else {
-              console.log("repply of consultant ", reply);
+              console.debug("repply of consultant ", reply);
               const new_msges = this.state.msges;
               new_msges.push({userOwner: false, msg: reply});
               this.setState({msges: new_msges});
@@ -40,11 +40,11 @@ class Chat extends Component {
     }
 
     componentDidMount(){
-        console.log("Chat app mounted");
+        console.debug("Chat app mounted");
     }
 
     componentDidUpdate(){
-        console.log("Chat app updated");
+        console.debug("Chat app updated");
     }
 
     onTyped = (e) => {

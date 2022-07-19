@@ -9,11 +9,11 @@ class Get extends Component {
     }
 
     componentDidMount(){
-        console.log("Get app mounted")
+        console.debug("Get app mounted")
     }
 
     componentDidUpdate(){
-        console.log("Get app updated")
+        console.debug("Get app updated")
     }
 
     onIdChange = (e) => {
