@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <nav className="navbar navbar-inverse col-sm-6 col-sm-offset-4">
+        <nav className="navbar navbar-inverse col-sm-6 col-sm-offset-2">
           <div className="container-fluid">
             <div className="navbar-header">
               <Link className="navbar-brand" to="/">Home</Link>
@@ -31,6 +31,12 @@ function App() {
           </div>
         </nav>
         <div className="col-sm-2"><Login /></div>
+        <button type="button" className="btn btn-success col-sm-1">
+          <div className="container-fluid">
+            <span className="fa fa-cart-plus fa-2x"></span>
+            <span className="badge badge-light">4</span>
+          </div>
+        </button>
       </div>
       <div>
         <Routes>
