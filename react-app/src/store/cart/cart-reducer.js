@@ -1,8 +1,9 @@
 import { CART_ACTION_TYPES } from "./cart-action-types";
 import Cookies from 'universal-cookie';
 
+
 const INITIAL_STATE = {
-    cart: [{productId: -1, amount: 0}],
+    cart: [], // contain {id: -1, amount: 0, model: '', description: ''}
 };
 
 // cart stored in coockie
@@ -13,16 +14,18 @@ if (cookiesCart) {
 }
 console.debug("INITIAL_STATE " + JSON.stringify(INITIAL_STATE));
 
-export const cartReducer = (state = INITIAL_STATE, action) => {
+export const cartReducer = (state = INITIAL_STATE.cart, action) => {
     const { type, payload } = action;
 
     switch (type) {
         case CART_ACTION_TYPES.ADD_ITEM_TO_CART:
             console.debug("ADD_ITEM_TO_CART " + JSON.stringify(state));
-            state.cart = [...state.cart, payload];
-            cookies.set('cart', state.cart);
             // deep copy needed to refresh redux storage otherwise no reaction
-            return Object.assign({}, state);
+            state = [...state];
+            state.push(payload)
+            console.debug("ADD_ITEM_TO_CART " + JSON.stringify(state));
+            cookies.set('cart', state);
+            return state;
         default:
             // by default for redux we need to return current state
             // throw new Error(`Unhandled type ${type} in cartReducer`);

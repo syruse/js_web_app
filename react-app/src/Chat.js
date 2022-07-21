@@ -74,9 +74,11 @@ class Chat extends Component {
                         </div>
                     ]))
                 }
-                <div className="chat">
+                <div className="chat col-sm-4 col-sm-offset-4">
                     <input className="well well-sm text-primary" placeholder="type request" onChange={this.onTyped} />
-                    <button className="btn btn-sm btn-success" onClick={this.type.bind(this)}>Send</button>
+                    <button className="btn btn-sm btn-success" onClick={this.type.bind(this)}>
+                        <span className="fa fa-paper-plane fa-2x"></span>
+                    </button>
                 </div>
             </div>
           );

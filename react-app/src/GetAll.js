@@ -25,39 +25,31 @@ class GetAll extends Component {
         console.debug("GetAll app updated with current cart" + JSON.stringify(this.props.cart))
     }
 
-    buy(productId){
+    buy(product){
         const { addPhone } = this.props;
-        console.debug("buy " + productId)
-        addPhone(productId, 1)
+        console.debug("buy " + JSON.stringify(product))
+        addPhone(product, 1)
     }
 
     render(){
         return (
-            <div className="row">
-                <h2 className="text-center" >Products</h2>
-                <table className="table-bordered col-sm-6 col-sm-offset-3">
-                    <thead>
-                        <tr>
-                            <th>Model</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.products.map(product => (
-                            [
-                                <tr key={product.id*3    }>
-                                    <td key={product.id*4 + 1}> {product.model} </td>
-                                    <td key={product.id*4 + 2}> {product.desc} </td>
-                                    <td key={product.id*4 + 3}> {product.price} </td>
-                                    <td key={product.id*4 + 4}> 
-                                            <button className="btn btn-success btn-xs btn-block" onClick={this.buy.bind(this, product.id)}>Buy</button> 
-                                    </td>
-                                </tr>
-                            ]))
-                        }
-                    </tbody>
-                </table>
+            <div className="col-sm-12">
+                {this.state.products.map(product => (
+                    [
+                        <div className="col-sm-4">
+                            <div className="card">
+                                <img className="card-img-top" style={{ "width": "18rem" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
+                                <div className="card-body">
+                                    <h5 className="card-title">{product.model}</h5>
+                                    <p className="card-text">{product.desc}</p>
+                                    <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
+                                        <span className="fa fa-cart-arrow-down fa-2x"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ]))
+                }
             </div>
           );
     }
@@ -79,7 +71,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addPhone: (productId, amount) => dispatch(addItem({productId: productId, amount: amount}))
+    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, model: product.model, description: product.desc}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetAll);
