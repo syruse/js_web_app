@@ -20,17 +20,30 @@ body {
 .footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  margin-left: 60%;
+  width: 40%;
   height: 30%;
   background-color: transparent;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
+.bottom-right {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 10%;
+  margin-top: 0%;
+  margin-right: 10%;
+  margin-bottom: 2%;
+  text-align: right;
+}
+
 .chat {
   position: relative;
   right: 0;
   bottom: 0;
+  height: fit-content;
   width: fit-content;
 }
 

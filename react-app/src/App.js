@@ -95,9 +95,15 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
       </div>
-      <div className="footer panel panel-success" >
-        <div className="panel-heading">Chat with consultant</div>
-        <div className="panel-body"> <Chat /></div>
+      <div className="footer" >
+        <div id="chat" className="collapse panel panel-success">
+          <div className="panel-heading">Chat with consultant</div>
+          <div className="panel-body"> <Chat /></div>
+        </div>
+        <div className="bottom-right">
+          <button className="btn btn-default" data-toggle="collapse" data-target="#chat">Dropup Example
+            <span className="caret"></span></button>
+        </div>
       </div>
     </div>
   );

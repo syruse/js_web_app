@@ -11,7 +11,8 @@ class Chat extends Component {
     constructor(props){
         super(props)
         this.state = {msges: []}
-        this.request = undefined;
+        this.request = undefined
+        this.sendButton = undefined
     }
 
     type() {
@@ -41,10 +42,13 @@ class Chat extends Component {
 
     componentDidMount(){
         console.debug("Chat app mounted");
+        this.sendButton = document.querySelector( '#sendButton' );
     }
 
     componentDidUpdate(){
         console.debug("Chat app updated");
+        // keep focus on send button after msg adding into chat
+        this.sendButton.scrollIntoView( { behavior: 'smooth', block: 'start' } );
     }
 
     onTyped = (e) => {
@@ -74,9 +78,9 @@ class Chat extends Component {
                         </div>
                     ]))
                 }
-                <div className="chat col-sm-4 col-sm-offset-4">
+                <div className="chat">
                     <input className="well well-sm text-primary" placeholder="type request" onChange={this.onTyped} />
-                    <button className="btn btn-sm btn-success" onClick={this.type.bind(this)}>
+                    <button id="sendButton" className="btn btn-xs btn-success" onClick={this.type.bind(this)}>
                         <span className="fa fa-paper-plane fa-2x"></span>
                     </button>
                 </div>
