@@ -122,6 +122,7 @@ services:
       - "5001:5001"
     volumes:
       - ./node-server/src:/project/node-server/src:ro
+      - ./node-server/public:/project/node-server/public:ro
       - ./node-server/package.json:/project/node-server/package.json:rw
       - ./node-server/yarn.lock:/project/node-server/yarn.lock:rw
       - ./node-server/tsconfig.json:/project/node-server/tsconfig.json:ro
@@ -145,6 +146,7 @@ services:
         ipv4_address: 172.20.0.8
     volumes:
       - ./react-app/src:/project/react-app/src:ro
+      - ./react-app/public:/project/react-app/public:ro
       - ./react-app/package.json:/project/react-app/package.json
     depends_on:
       - grpc_proxy

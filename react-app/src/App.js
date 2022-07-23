@@ -25,7 +25,7 @@ function App() {
         <nav className="navbar navbar-inverse col-sm-6 col-sm-offset-2">
           <div className="container-fluid">
             <div className="navbar-header">
-              <Link className="navbar-brand fa fa-home" to="/"> Home </Link>
+              <Link className="navbar-brand fas fa-home fa-sm" to="/"> Home </Link>
             </div>
             <ul className="nav navbar-nav">
               {currentUser && currentUser.user && currentUser.user.is_admin &&
@@ -37,18 +37,18 @@ function App() {
         </nav>
         <div className="col-sm-2"><Login /></div>
         <button type="button" className="btn btn-success col-sm-1" onClick={() => { openCart(true) }}>
-            <span className="fa fa-shopping-cart fa-2x"></span>
+            <span className="fas fa-shopping-cart fa-2x"></span>
             <span className="p-1">&nbsp;&nbsp;&nbsp;</span>
             <span className="badge badge-light">{store.cart.length}</span>
         </button>
       </div>
-      <div className="col-sm-12">
+      <div className="col-sm-8 col-sm-offset-4">
         {isCartOpened &&
           <div className="modal show" role="dialog">
             <div className="modal-dialog modal-dialog-centered modal-lg">
               <div className="modal-content">
                 <div className="modal-header">
-                  <button type="button" className="close fa fa-window-close" data-dismiss="modal" onClick={() => { openCart(false) }} ></button>
+                  <button type="button" className="close fas fa-window-close" data-dismiss="modal" onClick={() => { openCart(false) }} ></button>
                   <h4 className="modal-title">Cart</h4>
                 </div>
                 <div className="modal-body">
@@ -100,9 +100,11 @@ function App() {
           <div className="panel-heading">Chat with consultant</div>
           <div className="panel-body"> <Chat /></div>
         </div>
-        <div className="bottom-right">
-          <button className="btn btn-default" data-toggle="collapse" data-target="#chat">Dropup Example
-            <span className="caret"></span></button>
+        <div className="bottom-left">
+          <button className="btn btn-primary" data-toggle="collapse" data-target="#chat">
+            <i>chat with consultant</i>
+            <span className="p-1">&nbsp;&nbsp;&nbsp;</span>
+            <span className="fas fa-comment-dots fa-2x"></span></button>
         </div>
       </div>
     </div>

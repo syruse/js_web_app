@@ -14,29 +14,57 @@ body {
   /*background-size: cover;*/
   width: 100%;
   height: 100%;
-  overflow: hidden; /* scrollbar disabling */
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  margin-left: 60%;
-  width: 40%;
-  height: 30%;
-  background-color: transparent;
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
-.bottom-right {
+.v-align {
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+}
+
+.h-align {
+  display: block;
+  float: none;
+  width: fit-content;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-h-align {
+  text-align: center;
+}
+
+.space-between {
+  display: flex;
+  float: none;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.footer {
   position: fixed;
-  right: 0;
+  bottom: 0;
+  margin-right: 80%;
+  width: 30%;
+  height: 30%;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.bottom-left {
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 10%;
   margin-top: 0%;
-  margin-right: 10%;
+  margin-left: 10%;
   margin-bottom: 2%;
-  text-align: right;
+  text-align: left;
 }
 
 .chat {
@@ -44,7 +72,7 @@ body {
   right: 0;
   bottom: 0;
   height: fit-content;
-  width: fit-content;
+  width: 100%;
 }
 
 code {

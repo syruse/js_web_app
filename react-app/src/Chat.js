@@ -81,7 +81,7 @@ class Chat extends Component {
                 <div className="chat">
                     <input className="well well-sm text-primary" placeholder="type request" onChange={this.onTyped} />
                     <button id="sendButton" className="btn btn-xs btn-success" onClick={this.type.bind(this)}>
-                        <span className="fa fa-paper-plane fa-2x"></span>
+                        <span className="fas fa-paper-plane fa-2x"></span>
                     </button>
                 </div>
             </div>

@@ -37,14 +37,19 @@ class GetAll extends Component {
                 {this.state.products.map(product => (
                     [
                         <div className="col-sm-4">
-                            <div className="card">
-                                <img className="card-img-top" style={{ "width": "18rem" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
+                            <div className="card h-align">
+                                <img className="card-img-top h-align" style={{ "width": "70%" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
                                 <div className="card-body">
-                                    <h5 className="card-title">{product.model}</h5>
-                                    <p className="card-text">{product.desc}</p>
-                                    <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
-                                        <span className="fa fa-cart-arrow-down fa-2x"></span>
-                                    </button>
+                                    <h5 className="card-title text-h-align">{product.model}</h5>
+                                    <p className="card-text text-h-align">{product.desc}</p>
+                                    <div className="space-between">
+                                        <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
+                                            <span className="fas fa-cart-arrow-down fa-2x"></span>
+                                        </button>
+                                        <button className="btn btn-sm btn-danger">
+                                            <span className="fas fa-heart fa-2x"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
