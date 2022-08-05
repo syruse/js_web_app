@@ -40,8 +40,8 @@ class GetAll extends Component {
                             <div className="card h-align">
                                 <img className="card-img-top h-align" style={{ "width": "70%" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
                                 <div className="card-body">
-                                    <h5 className="card-title text-h-align">{product.model}</h5>
-                                    <p className="card-text text-h-align">{product.desc}</p>
+                                    <h5 className="card-title text-h-align">{product.brand}</h5>
+                                    <p className="card-text text-h-align">{product.model}</p>
                                     <div className="space-between">
                                         <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
                                             <span className="fas fa-cart-arrow-down fa-2x"></span>
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, model: product.model, description: product.desc}))
+    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, brand: product.brand, model: product.model}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetAll);

@@ -1,9 +1,9 @@
 {
-    "topic": "db.db.phones",
+    "topic": "db.db.devices",
     "type": "debezium",
     "schema": {
         "type": "record",
-        "name": "phones",
+        "name": "devices",
         "fields": [
             {"name": "id", "type": "int"},
             {"name": "model", "type": "string"},

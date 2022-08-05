@@ -1,9 +1,9 @@
 import { Consumer, Kafka, logLevel as kafkaLogLevel } from 'kafkajs';
 import { SchemaRegistry, readAVSCAsync } from "@kafkajs/confluent-schema-registry";
-import { phoneHandler } from "./phoneHandler";
+import { deviceHandler } from "./deviceHandler";
 import debeziumConnector from './debezium-connector.json';
 
-const TOPIC_PHONES_TABLE = debeziumConnector.config['database.server.name'] + ".db.phones";
+const TOPIC_DEVICES_TABLE = debeziumConnector.config['database.server.name'] + ".db.devices";
 
 export const createKafkaConsumer = (hosts:string[], group:string): Consumer => {
     const kafka = new Kafka({
@@ -28,7 +28,7 @@ export const schemaRegistry = (host:string): SchemaRegistry => {
 export const connectKafkaConsumer = async (consumer: Consumer, schemaRegistry?: SchemaRegistry): Promise<Consumer> => {
     await consumer.connect();
 
-    await consumer.subscribe({ topic: TOPIC_PHONES_TABLE, fromBeginning: true });
+    await consumer.subscribe({ topic: TOPIC_DEVICES_TABLE, fromBeginning: true });
 
     /**
      * Run the consumer
@@ -45,8 +45,8 @@ export const connectKafkaConsumer = async (consumer: Consumer, schemaRegistry?: 
             console.log("Received message" + JSON.stringify(value) + " for " + topic)
 
             try {
-                if (topic === TOPIC_PHONES_TABLE) {
-                    phoneHandler(value);
+                if (topic === TOPIC_DEVICES_TABLE) {
+                    deviceHandler(value);
                 } else {
                     // nothing
                 }

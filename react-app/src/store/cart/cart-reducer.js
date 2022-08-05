@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 
 const INITIAL_STATE = {
-    cart: [], // contain {id: -1, amount: 0, model: '', description: ''}
+    cart: [], // contain {id: -1, amount: 0, brand: '', model: ''}
 };
 
 // cart stored in coockie

@@ -121,7 +121,7 @@ services:
       - "8080:8080"
       - "5001:5001"
     volumes:
-      - ./node-server/src:/project/node-server/src:ro
+      - ./node-server/src:/project/node-server/src:rw
       - ./node-server/public:/project/node-server/public:ro
       - ./node-server/package.json:/project/node-server/package.json:rw
       - ./node-server/yarn.lock:/project/node-server/yarn.lock:rw

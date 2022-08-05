@@ -67,8 +67,8 @@ function App() {
                         {store.cart.map(product => (
                           [
                             <tr key={product.id * 5}>
-                              <td key={product.id * 5 + 1}> {product.model} </td>
-                              <td key={product.id * 5 + 2}> {product.desc}  </td>
+                              <td key={product.id * 5 + 1}> {product.brand} </td>
+                              <td key={product.id * 5 + 2}> {product.model}  </td>
                               <td key={product.id * 5 + 3}> {product.price} </td>
                               <td key={product.id * 5 + 4}> {product.amount} </td>
                             </tr>

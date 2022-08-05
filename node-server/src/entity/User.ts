@@ -1,6 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, BaseEntity} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany, BaseEntity} from "typeorm";
 import {IsEmail, IsDateString} from "class-validator";
-import { Cart } from "./Cart";
+import { Purchase } from "./Purchase";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -25,7 +25,8 @@ export class User extends BaseEntity {
     @IsDateString()
     date: string;
 
-    @OneToOne(type => Cart) @JoinColumn() 
-    cart: Cart;
+    @ManyToMany(type => Purchase, (purchase) => purchase.users)
+    @JoinTable() 
+    orders: Purchase[];
 
 }

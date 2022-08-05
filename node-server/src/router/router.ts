@@ -38,29 +38,29 @@ router.post('/register', async (req: express.Request, res: express.Response) => 
     }
 });
 
-router.get('/api/phones', async (req, res) => {
-    console.log("/api/phones ")
-    const phones = await GeneralController.getPhones();
-    res.send(phones);
+router.get('/api/devices', async (req, res) => {
+    console.log("/api/devices ")
+    const devices = await GeneralController.getDevices();
+    res.send(devices);
 });
 
-router.post('/api/phones', async (req, res) => {
-    console.log("/api/phones ", (req as any).user);
+router.post('/api/devices', async (req, res) => {
+    console.log("/api/devices ", (req as any).user);
     if ( typeof (req as any).user  === 'undefined' || !(req as any).user.is_admin) {
         res.sendStatus(401);
         console.log("unauthorized request");
         return;
     }
 
-    const { model, desc, price } = req.body;
-    console.log(" phone is bening added " + model + " " + desc + " " + price);
+    const { brand, model } = req.body;
+    console.debug(" device is bening added ", brand, model);
     try {
-        const phone = await GeneralController.addPhone(model, desc, price);
+        const device = await GeneralController.addDevice(req.body);
         res.send('OK');
-        console.log("phone adding succeeded id: " + phone.id);
+        console.log("device adding succeeded id: " + device.id);
     } catch (error) {
         res.status(400).send(error.message);
-        console.log("phone adding failed for " + model);
+        console.error("device adding failed for " + model);
     }
 });
 

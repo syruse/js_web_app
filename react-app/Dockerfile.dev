@@ -8,7 +8,8 @@ COPY . .
 
 COPY --chown=node:node . .
 
-USER node
+# 'root' is only for dev mode, must be replaced with 'node' for production
+USER root
 
 RUN yarn
 

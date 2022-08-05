@@ -16,7 +16,7 @@
         "database.serverTimezone":"Etc/UTC",
         "decimal.handling.mode": "string",
         "snapshot.mode": "when_needed",
-        "table.include.list":"db.phones",
+        "table.include.list":"db.devices",
         "topic.creation.default.replication.factor": 1,
         "topic.creation.default.partitions": 3,
         "topic.creation.default.cleanup.policy": "compact",

@@ -37,7 +37,7 @@ class Create extends Component {
     }
 
     createProduct(){
-        fetch("http://localhost:8080/api/phones", this.context.currentUser.token, Method.POST, 
+        fetch("http://localhost:8080/api/devices", this.context.currentUser.token, Method.POST, 
         {
             model: this.state.model,
             desc: this.state.desc,
@@ -47,7 +47,7 @@ class Create extends Component {
             this.setState({status:'Success'})
             console.debug("Create ", res)
         }).catch(err=>{
-            this.setState({status:'Adding new phone failed'})
+            this.setState({status:'Adding new device failed'})
             console.error("error ", err)
         })
     }
@@ -56,7 +56,7 @@ class Create extends Component {
         return (
             <div>
                 <div className="form-horizontal">
-                    <h2>Phone adding</h2>
+                    <h2>Device adding</h2>
                     <div className="form-group">
                         <label className="control-label col-sm-2">Model:</label>
                         <div className="col-sm-10">

@@ -1,5 +1,5 @@
 import { User } from "../entity/User";
-import { Phone } from "../entity/Phone";
+import { Device } from "../entity/Device";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -70,24 +70,25 @@ class GeneralController {
         );
     }
 
-    static async getPhones(): Promise<Phone[]> {
-        const phones = await Phone.find({
+    static async getDevices(): Promise<Device[]> {
+        const devices = await Device.find({
             cache: {
-                id: "phones",
+                id: "devices",
                 milliseconds: 600000 // 10 min
             }
         });
-        return phones;
+        return devices;
     }
 
-    static async addPhone(model: string, desc: string, price: number): Promise<Phone> | never {
-        const phone = new Phone;
-        phone.model = model;
-        phone.desc = desc;
-        phone.price = price;
+    static async addDevice(body: object): Promise<Device> | never {
+        const device = new Device;
+        Object.keys(body).forEach(key => {
+            console.debug("set property ", key, ": ", body[key]);
+            device[key] = body[key];
+        });
 
         try {
-            return await phone.save();
+            return await device.save();
         } catch (error) {
             console.error(error);
             throw error;
