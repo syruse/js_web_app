@@ -23,7 +23,6 @@ export class Purchase extends BaseEntity {
     device: Device
 
     @ManyToMany(type => User, (user) => user.orders)
-    @JoinTable() 
     users: User[];
 
 }

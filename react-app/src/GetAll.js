@@ -12,7 +12,7 @@ class GetAll extends Component {
 
     componentDidMount(){
         console.debug("GetAll app mounted")
-        fetch("http://localhost:8080/api/phones", undefined, Method.GET)
+        fetch("http://localhost:8080/api/devices", undefined, Method.GET)
         .then(res=>{
             console.debug("GetAll ", res)
             this.setState({products:res.data})

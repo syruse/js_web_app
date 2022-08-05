@@ -10,6 +10,7 @@ import { createKafkaConsumer, connectKafkaConsumer, schemaRegistry } from "./kaf
 require('dotenv').config();
 
 let server = undefined;
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 process.on("SIGINT", async () => {
     console.log("Caught interrupt signal");
@@ -42,10 +43,13 @@ AppDataSource.initialize().then(async () => {
     console.log("server is waiting for connection on port :", port)
     server = app.listen(port);
 
+    // precaution: to be sure that services are started and available for communication
+    await sleep(3000);
+
     startGrpc(process.env.GRPC);
     console.log("grpc listening on " + process.env.GRPC);
 
-    establishConnection(process.env.KAFKA_DEBEZIUM);
+    await establishConnection(process.env.KAFKA_DEBEZIUM);
     console.log("debezium-connector established");
 
     await connectKafkaConsumer(createKafkaConsumer([process.env.KAFKA_HOST], process.env.KAFKA_GROUP_DB_WATCHER),
