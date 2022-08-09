@@ -1,5 +1,5 @@
 import { User } from "../entity/User";
-import { Device } from "../entity/Device";
+import { Device, BrandType, DisplayType, CPUType, StorageType } from "../entity/Device";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -68,6 +68,35 @@ class GeneralController {
            jwt.verify(token, secret, (err, decoded) => err ? reject(new Error("jwt decoding failed " + err)) : 
                                                        resolve(decoded as JwtData))
         );
+    }
+
+    static getDevicesConfiguration(): any {
+        const devicesConfiguration = {
+            brand: [],
+            model: '',
+            displaySize: { max: 11.0, min: 0.0 },
+            displayType: [],
+            cpuType: [],
+            storageType: [],
+            cameraMp: { max: 200.0, min: 0.0 },
+            cameraFrontMp: { max: 200.0, min: 0.0 },
+            battery_mAh: { max: 200000.0, min: 0.0 },
+            sim: { max: true, min: false },
+            price: { max: 999999.0, min: 0.0 }
+        };
+        for (let item in BrandType) {
+            devicesConfiguration.brand.push(BrandType[item])
+        }
+        for (let item in DisplayType) {
+            devicesConfiguration.displayType.push(DisplayType[item])
+        }
+        for (let item in CPUType) {
+            devicesConfiguration.cpuType.push(CPUType[item])
+        }
+        for (let item in StorageType) {
+            devicesConfiguration.storageType.push(StorageType[item])
+        }
+        return devicesConfiguration;
     }
 
     static async getDevices(): Promise<Device[]> {

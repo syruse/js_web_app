@@ -6,9 +6,13 @@ class Create extends Component {
 
     static contextType = UserContext;
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {model: {}, desc: {}, price: {}, status: ''}
+        this.state = {
+            devicesConfiguration: {},
+            brand: 0, model: '', displaySize: 0, displayType: 0, cpuType: 0, storageType: 0, cameraMp: 0, cameraFrontMp: 0,
+            battery_mAh: 0, sim: false, price: 0, status: ''
+        }
     }
 
     componentDidMount(){
@@ -16,8 +20,16 @@ class Create extends Component {
         if (!this.context.currentUser && typeof this.context.currentUser.token === 'undefined') {
             console.debug("Create app mounted with empty token")
             this.props.navigate("/");
+        } else {
+            console.debug("Create app mounted with token", this.context.currentUser.token)
+            fetch("http://localhost:8080/api/devices-configuration", this.context.currentUser.token, Method.GET)
+            .then(res=>{
+                console.debug("devices-configuration ", res)
+                this.setState({devicesConfiguration:res.data})
+            }).catch(err=>{
+                console.error("error ", err)
+            })
         }
-        console.debug("Create app mounted with token", this.context.currentUser.token)
     }
 
     componentDidUpdate(){
@@ -28,8 +40,8 @@ class Create extends Component {
         this.setState({model:e.target.value})
     }
 
-    onDescChange = (e) => {
-        this.setState({desc:e.target.value})
+    onBrandChange = (e) => {
+        this.setState({brand:e.target.value})
     }
 
     onPriceChange = (e) => {
@@ -40,7 +52,7 @@ class Create extends Component {
         fetch("http://localhost:8080/api/devices", this.context.currentUser.token, Method.POST, 
         {
             model: this.state.model,
-            desc: this.state.desc,
+            brand: this.state.brand,
             price: this.state.price
         })
         .then(res=>{
@@ -58,15 +70,29 @@ class Create extends Component {
                 <div className="form-horizontal">
                     <h2>Device adding</h2>
                     <div className="form-group">
+                        <label className="control-label col-sm-2">Brand:</label>
+                        <div className="col-sm-10">
+                            {this.state.devicesConfiguration.brand && <select className="form-control" name="brands" onChange={this.onBrandChange}>
+                                {this.state.devicesConfiguration.brand.map((brand, index) => (
+                                    [
+                                        <option value={index}>{brand}</option>
+                                    ]))
+                                }
+                            </select>
+                            }
+                        </div>
+                    </div>
+                    <div className="form-group">
                         <label className="control-label col-sm-2">Model:</label>
                         <div className="col-sm-10">
                             <input className="form-control" onChange={this.onModelChange} />
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="control-label col-sm-2" >Description:</label>
+                        <label className="control-label col-sm-2">Sim:</label>
                         <div className="col-sm-10">
-                            <input className="form-control" onChange={this.onDescChange} />
+                            <label class="control-label radio-inline"><input type="radio" name="sim" onClick={() => { this.setState({sim:false}) }} />no sim</label>
+                            <label class="control-label radio-inline"><input type="radio" name="sim" onClick={() => { this.setState({sim:true}) }} />with sim</label>
                         </div>
                     </div>
                     <div className="form-group">

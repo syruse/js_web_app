@@ -64,4 +64,11 @@ router.post('/api/devices', async (req, res) => {
     }
 });
 
+router.get('/api/devices-configuration', (req, res) => {
+    console.info("/api/device-configuration ")
+    const devicesConfiguration = GeneralController.getDevicesConfiguration();
+    console.debug('data: ', JSON.stringify(devicesConfiguration))
+    res.send(devicesConfiguration);
+});
+
 export default router;
