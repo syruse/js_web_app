@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, BaseEntity} from "typeorm";
+import {IsEnum, Max} from "class-validator";
 import { Category } from "./Category";
 import { Purchase } from "./Purchase";
 
@@ -43,30 +44,38 @@ export class Device extends BaseEntity {
     id: number;
 
     @Column({ type: 'enum', enum: BrandType })
+    @IsEnum(BrandType)
     brand: BrandType;
 
     @Column()
     model: string;
 
     @Column({ type: "decimal", precision: 3, scale: 1, nullable: true })
+    @Max(11)
     displaySize: number;
 
     @Column({ type: 'enum', enum: DisplayType, nullable: true })
+    @IsEnum(DisplayType)
     displayType: DisplayType;
 
     @Column({ type: 'enum', enum: CPUType, nullable: true })
+    @IsEnum(CPUType)
     cpuType: CPUType;
 
     @Column({ type: 'enum', enum: StorageType, nullable: true })
+    @IsEnum(StorageType)
     storageType: StorageType;
 
     @Column({ type: "decimal", precision: 5, scale: 1, nullable: true })
+    @Max(200)
     cameraMp: number;
 
     @Column({ type: "decimal", precision: 5, scale: 1, nullable: true })
+    @Max(200)
     cameraFrontMp: number;
 
     @Column({ type: "int", width: 8, nullable: true })
+    @Max(200000)
     battery_mAh: number;
 
     @Column({ default: false })
