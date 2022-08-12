@@ -11,7 +11,7 @@ class Create extends Component {
         this.state = {
             devicesConfiguration: {},
             category: 0, brand: 0, model: '', displaySize: 0, displayType: 0, cpuType: 0, storageType: 0, cameraMp: 0, cameraFrontMp: 0,
-            battery_mAh: 0, sim: false, price: 0, status: ''
+            battery_mAh: 0, sim: false, quantity: 0, price: 0, status: ''
         }
     }
 
@@ -34,34 +34,6 @@ class Create extends Component {
 
     componentDidUpdate(){
         console.debug("Create app updated")
-    }
-
-    onCategoryChange = (e) => {
-        this.setState({category:e.target.value})
-    }
-
-    onModelChange = (e) => {
-        this.setState({model:e.target.value})
-    }
-
-    onBrandChange = (e) => {
-        this.setState({brand:e.target.value})
-    }
-
-    onDisplayTypeChange = (e) => {
-        this.setState({displayType:e.target.value})
-    }
-
-    onCPUTypeChange = (e) => {
-        this.setState({cpuType:e.target.value})
-    }
-
-    onStorageTypeChange = (e) => {
-        this.setState({storageType:e.target.value})
-    }
-
-    onPriceChange = (e) => {
-        this.setState({price:e.target.value})
     }
 
     onDisplaySizeChange = (e) => {
@@ -112,8 +84,9 @@ class Create extends Component {
             storageType: this.state.storageType,
             cameraMp: parseFloat(this.state.cameraMp),
             cameraFrontMp: parseFloat(this.state.cameraFrontMp),
-            battery_mAh: parseFloat(this.state.battery_mAh),
+            battery_mAh: parseInt(this.state.battery_mAh, 10),
             sim: this.state.sim,
+            quantity: parseInt(this.state.quantity, 10),
             price: parseFloat(this.state.price)
         })
         .then(res=>{
@@ -133,7 +106,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">Category:</label>
                         <div className="col-sm-10">
-                            {this.state.devicesConfiguration.category && <select className="form-control" name="category" onChange={this.onCategoryChange}>
+                            {this.state.devicesConfiguration.category && <select className="form-control" name="category" onChange={(e) => {this.setState({ category: e.target.value })}}>
                                 {this.state.devicesConfiguration.category.map((category, index) => (
                                     [
                                         <option value={index}>{category}</option>
@@ -146,7 +119,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">Brand:</label>
                         <div className="col-sm-10">
-                            {this.state.devicesConfiguration.brand && <select className="form-control" name="brand" onChange={this.onBrandChange}>
+                            {this.state.devicesConfiguration.brand && <select className="form-control" name="brand" onChange={(e) => {this.setState({ brand: e.target.value })}}>
                                 {this.state.devicesConfiguration.brand.map((brand, index) => (
                                     [
                                         <option value={index}>{brand}</option>
@@ -159,7 +132,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">Model:</label>
                         <div className="col-sm-10">
-                            <input className="form-control" onChange={this.onModelChange} />
+                            <input className="form-control" onChange={(e) => {this.setState({ model: e.target.value })}} />
                         </div>
                     </div>
                     <div className="form-group">
@@ -172,7 +145,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">Display type:</label>
                         <div className="col-sm-10">
-                            {this.state.devicesConfiguration.displayType && <select className="form-control" name="displayType" onChange={this.onDisplayTypeChange}>
+                            {this.state.devicesConfiguration.displayType && <select className="form-control" name="displayType" onChange={(e) => {this.setState({ displayType: e.target.value })}}>
                                 {this.state.devicesConfiguration.displayType.map((displayType, index) => (
                                     [
                                         <option value={index}>{displayType}</option>
@@ -217,7 +190,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">CPU:</label>
                         <div className="col-sm-10">
-                            {this.state.devicesConfiguration.cpuType && <select className="form-control" name="cpuType" onChange={this.onCPUTypeChange}>
+                            {this.state.devicesConfiguration.cpuType && <select className="form-control" name="cpuType" onChange={(e) => {this.setState({ cpuType: e.target.value })}}>
                                 {this.state.devicesConfiguration.cpuType.map((cpuType, index) => (
                                     [
                                         <option value={index}>{cpuType}</option>
@@ -230,7 +203,7 @@ class Create extends Component {
                     <div className="form-group">
                         <label className="control-label col-sm-2">storage:</label>
                         <div className="col-sm-10">
-                            {this.state.devicesConfiguration.storageType && <select className="form-control" name="storageType" onChange={this.onStorageTypeChange}>
+                            {this.state.devicesConfiguration.storageType && <select className="form-control" name="storageType" onChange={(e) => {this.setState({ storageType: e.target.value })}}>
                                 {this.state.devicesConfiguration.storageType.map((storageType, index) => (
                                     [
                                         <option value={index}>{storageType}</option>
@@ -241,9 +214,19 @@ class Create extends Component {
                         </div>
                     </div>
                     <div className="form-group">
+                        <label className="control-label col-sm-2" >Quantity:</label>
+                        <div className="col-sm-10">
+                            <input className="form-control" name="quantity" onChange={(e) => {
+                                this.setState({ quantity: e.target.value })
+                            }} />
+                        </div>
+                    </div>
+                    <div className="form-group">
                         <label className="control-label col-sm-2" >Price:</label>
                         <div className="col-sm-10">
-                            <input className="form-control" onChange={this.onPriceChange} />
+                            <input className="form-control" onChange={(e) => {
+                                this.setState({ price: e.target.value })
+                            }} />
                         </div>
                     </div>
                     <div className="form-group">

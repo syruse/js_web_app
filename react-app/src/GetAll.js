@@ -26,9 +26,9 @@ class GetAll extends Component {
     }
 
     buy(product){
-        const { addPhone } = this.props;
+        const { addDevice } = this.props;
         console.debug("buy " + JSON.stringify(product))
-        addPhone(product, 1)
+        addDevice(product, 1)
     }
 
     render(){
@@ -40,8 +40,8 @@ class GetAll extends Component {
                             <div className="card h-align dropdown-toggle">
                                 <img className="card-img-top h-align" style={{ "width": "70%" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
                                 <div className="card-body">
-                                    <h4 className="card-title text-h-align">{product.brand}</h4>
-                                    <h5 className="card-text text-h-align">{product.model}</h5>
+                                    <h3 className="card-title text-h-align">{product.brand}</h3>
+                                    <h4 className="card-text text-h-align">{product.model}</h4>
                                     <h3 className="card-text text-h-align"><b>{product.price} $</b></h3>
                                     <div className="space-between">
                                         <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
@@ -72,8 +72,8 @@ class GetAll extends Component {
     const navigate = useNavigate();
     const cart = useSelector((state) => state.cart)
     const dispatch = useDispatch()
-    const addPhone = (productId) => dispatch(addItem({productId: productId}))
-    return <GetAll {...props} navigate={navigate} cart={cart} addPhone={addPhone} />
+    const addDevice = (productId) => dispatch(addItem({productId: productId}))
+    return <GetAll {...props} navigate={navigate} cart={cart} addDevice={addDevice} />
 }
 
 export default WithNavigate;*/
@@ -83,7 +83,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, brand: product.brand, model: product.model, price: product.price}))
+    addDevice: (product, amount) => dispatch(addItem({id: product.id, amount: amount, brand: product.brand, model: product.model, price: product.price}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetAll);

@@ -78,9 +78,13 @@ export class Device extends BaseEntity {
     @IsPositive()
     cameraFrontMp: number;
 
-    @Column({ type: "int", width: 8, nullable: true })
+    @Column({ type: "int", width: 2, nullable: true })
     @IsPositive()
     battery_mAh: number;
+
+    @Column({ type: "int", width: 2, default: 0 })
+    @IsPositive()
+    quantity: number;
 
     @Column({ default: false })
     sim: boolean;

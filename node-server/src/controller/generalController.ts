@@ -76,15 +76,15 @@ class GeneralController {
             category: [],
             brand: [],
             model: '',
-            displaySize: { max: 11.0, min: 0.0 },
+            displaySize: { max: 100.0, min: 0.0 },
             displayType: [],
             cpuType: [],
             storageType: [],
             cameraMp: { max: 200.0, min: 0.0 },
             cameraFrontMp: { max: 200.0, min: 0.0 },
-            battery_mAh: { max: 200000.0, min: 0.0 },
+            battery_mAh: { max: 1000000.0, min: 0.0 },
             sim: { max: true, min: false },
-            price: { max: 999999.0, min: 0.0 }
+            price: { max: 1000000.0, min: 0.0 }
         };
         for (let item in CategoryType) {
             devicesConfiguration.category.push(CategoryType[item])
@@ -137,8 +137,8 @@ class GeneralController {
                 category.name = categoryName
                 category.desc = categoryName
                 await category.save();
-                device.category = category;
             }
+            device.category = category;
             console.debug("new device added: " + JSON.stringify(device))
             return await device.save();
         } catch (error) {
