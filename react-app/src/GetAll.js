@@ -36,12 +36,13 @@ class GetAll extends Component {
             <div className="col-sm-12">
                 {this.state.products.map(product => (
                     [
-                        <div className="col-sm-4">
-                            <div className="card h-align">
+                        <div className="col-sm-4 dropdown">
+                            <div className="card h-align dropdown-toggle">
                                 <img className="card-img-top h-align" style={{ "width": "70%" }} src={"https://cdn0.it4profit.com/s3/isupport-kz/categories/iphone-13.webp"} alt="Card cap"></img>
                                 <div className="card-body">
-                                    <h5 className="card-title text-h-align">{product.brand}</h5>
-                                    <p className="card-text text-h-align">{product.model}</p>
+                                    <h4 className="card-title text-h-align">{product.brand}</h4>
+                                    <h5 className="card-text text-h-align">{product.model}</h5>
+                                    <h3 className="card-text text-h-align"><b>{product.price} $</b></h3>
                                     <div className="space-between">
                                         <button className="btn btn-sm btn-success" onClick={this.buy.bind(this, product)}>
                                             <span className="fas fa-cart-arrow-down fa-2x"></span>
@@ -50,6 +51,12 @@ class GetAll extends Component {
                                             <span className="fas fa-heart fa-2x"></span>
                                         </button>
                                     </div>
+                                    <ul className="dropdown-menu text-left list-unstyled">
+                                        <li>CPU: <b>{product.cpuType}</b></li>
+                                        <li>Capacity: <b>{product.storageType} Gb</b></li>
+                                        <li>Display size: <b>{product.displaySize}</b></li>
+                                        <li>Display type: <b>{product.displayType}</b></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +83,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, brand: product.brand, model: product.model}))
+    addPhone: (product, amount) => dispatch(addItem({id: product.id, amount: amount, brand: product.brand, model: product.model, price: product.price}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetAll);

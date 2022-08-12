@@ -10,7 +10,7 @@ class Create extends Component {
         super(props)
         this.state = {
             devicesConfiguration: {},
-            brand: 0, model: '', displaySize: 0, displayType: 0, cpuType: 0, storageType: 0, cameraMp: 0, cameraFrontMp: 0,
+            category: 0, brand: 0, model: '', displaySize: 0, displayType: 0, cpuType: 0, storageType: 0, cameraMp: 0, cameraFrontMp: 0,
             battery_mAh: 0, sim: false, price: 0, status: ''
         }
     }
@@ -34,6 +34,10 @@ class Create extends Component {
 
     componentDidUpdate(){
         console.debug("Create app updated")
+    }
+
+    onCategoryChange = (e) => {
+        this.setState({category:e.target.value})
     }
 
     onModelChange = (e) => {
@@ -99,17 +103,18 @@ class Create extends Component {
     createProduct(){
         fetch("http://localhost:8080/api/devices", this.context.currentUser.token, Method.POST, 
         {
+            category: this.state.category,
             model: this.state.model,
             brand: this.state.brand,
-            displaySize: this.state.displaySize,
+            displaySize: parseFloat(this.state.displaySize),
             displayType: this.state.displayType,
             cpuType: this.state.cpuType,
             storageType: this.state.storageType,
-            cameraMp: this.state.cameraMp,
-            cameraFrontMp: this.state.cameraFrontMp,
-            battery_mAh: this.state.battery_mAh,
+            cameraMp: parseFloat(this.state.cameraMp),
+            cameraFrontMp: parseFloat(this.state.cameraFrontMp),
+            battery_mAh: parseFloat(this.state.battery_mAh),
             sim: this.state.sim,
-            price: this.state.price
+            price: parseFloat(this.state.price)
         })
         .then(res=>{
             this.setState({status:'Success'})
@@ -125,6 +130,19 @@ class Create extends Component {
             <div>
                 <div className="form-horizontal">
                     <h2>Device adding</h2>
+                    <div className="form-group">
+                        <label className="control-label col-sm-2">Category:</label>
+                        <div className="col-sm-10">
+                            {this.state.devicesConfiguration.category && <select className="form-control" name="category" onChange={this.onCategoryChange}>
+                                {this.state.devicesConfiguration.category.map((category, index) => (
+                                    [
+                                        <option value={index}>{category}</option>
+                                    ]))
+                                }
+                            </select>
+                            }
+                        </div>
+                    </div>
                     <div className="form-group">
                         <label className="control-label col-sm-2">Brand:</label>
                         <div className="col-sm-10">

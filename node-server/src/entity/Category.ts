@@ -2,8 +2,8 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToMany, BaseEntity} from "typ
 import { Device } from "./Device";
 
 export enum CategoryType {
-    tablet = 'Tablet',
     phone = 'Phone',
+    tablet = 'Tablet',
     laptop = 'Laptop'
 }
 
@@ -14,7 +14,7 @@ export class Category extends BaseEntity {
     id: number;
 
     @Column({ type: 'enum', enum: CategoryType, unique: true, nullable: false })
-    brand: CategoryType;
+    name: CategoryType;
 
     @Column({ type: 'text', nullable: true })
     desc: string;

@@ -1,5 +1,6 @@
 import { User } from "../entity/User";
 import { Device, BrandType, DisplayType, CPUType, StorageType } from "../entity/Device";
+import { Category, CategoryType } from "../entity/Category";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -72,6 +73,7 @@ class GeneralController {
 
     static getDevicesConfiguration(): any {
         const devicesConfiguration = {
+            category: [],
             brand: [],
             model: '',
             displaySize: { max: 11.0, min: 0.0 },
@@ -84,6 +86,9 @@ class GeneralController {
             sim: { max: true, min: false },
             price: { max: 999999.0, min: 0.0 }
         };
+        for (let item in CategoryType) {
+            devicesConfiguration.category.push(CategoryType[item])
+        }
         for (let item in BrandType) {
             devicesConfiguration.brand.push(BrandType[item])
         }
@@ -115,8 +120,26 @@ class GeneralController {
             console.debug("set property ", key, ": ", body[key]);
             device[key] = body[key];
         });
+        device.brand = BrandType[Object.keys(BrandType)[body['brand']]];
+        device.cpuType = CPUType[Object.keys(CPUType)[body['cpuType']]];
+        device.displayType = DisplayType[Object.keys(DisplayType)[body['displayType']]];
+        device.storageType = StorageType[Object.keys(StorageType)[body['storageType']]];
 
         try {
+            const categoryName = CategoryType[Object.keys(CategoryType)[body['category']]];
+            let category = await Category.findOne({
+                where: {
+                    name: categoryName
+                }
+            });
+            if (!category) {
+                category = new Category;
+                category.name = categoryName
+                category.desc = categoryName
+                await category.save();
+                device.category = category;
+            }
+            console.debug("new device added: " + JSON.stringify(device))
             return await device.save();
         } catch (error) {
             console.error(error);

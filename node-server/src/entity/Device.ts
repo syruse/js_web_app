@@ -1,5 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, BaseEntity} from "typeorm";
-import {IsEnum, Max} from "class-validator";
+import {IsEnum, Max, Min, IsUrl, IsPositive} from "class-validator";
 import { Category } from "./Category";
 import { Purchase } from "./Purchase";
 
@@ -50,8 +50,12 @@ export class Device extends BaseEntity {
     @Column()
     model: string;
 
-    @Column({ type: "decimal", precision: 3, scale: 1, nullable: true })
-    @Max(11)
+    @Column({ type: "varchar", length: 100, unique: true, default: ""})
+    thumbnail: string;
+
+    @Column({ type: "decimal", precision: 4, scale: 1, nullable: true })
+    @Min(0.0)
+    @Max(100.0)
     displaySize: number;
 
     @Column({ type: 'enum', enum: DisplayType, nullable: true })
@@ -67,21 +71,22 @@ export class Device extends BaseEntity {
     storageType: StorageType;
 
     @Column({ type: "decimal", precision: 5, scale: 1, nullable: true })
-    @Max(200)
+    @IsPositive()
     cameraMp: number;
 
     @Column({ type: "decimal", precision: 5, scale: 1, nullable: true })
-    @Max(200)
+    @IsPositive()
     cameraFrontMp: number;
 
     @Column({ type: "int", width: 8, nullable: true })
-    @Max(200000)
+    @IsPositive()
     battery_mAh: number;
 
     @Column({ default: false })
     sim: boolean;
 
     @Column({ type: "decimal", precision: 12, scale: 2 })
+    @IsPositive()
     price: number;
 
     @OneToMany(() => Purchase, (purchase) => purchase.device)

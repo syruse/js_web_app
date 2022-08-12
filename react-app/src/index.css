@@ -45,6 +45,15 @@ body {
   justify-content: space-around;
 }
 
+.dropdown:hover .dropdown-menu {
+  display: block;
+  width: 60%;
+  margin-left: 20%;
+  padding-left: 5%;
+  list-style: disc;
+  list-style-position: inside;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
