@@ -1,0 +1,45 @@
+type Query {
+    getProducts(filters: FiltersExpression): [Product]
+}
+
+type Product {
+    id:   ID!
+    brand: String,
+    model: String,
+    thumbnail: String,
+    displaySize: Float,
+    displayType: String,
+    cpuType: String,
+    storageType: String,
+    cameraMp: Int,
+    cameraFrontMp: Int,
+    battery_mAh: Int,
+    quantity: Int,
+    sim: Boolean,
+    price: Float
+}
+
+enum Operator {
+    AND
+    OR
+}
+
+enum Operation {
+    LESS
+    GREATER
+    EQ
+    LE
+    GE
+    IN
+    LIKE
+}
+
+input Filter {
+    field: String!
+    op: Operation!
+    values: [String!]!
+}
+
+input FiltersExpression {
+    filters: [Filter!]!
+}
