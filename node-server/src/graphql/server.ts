@@ -1,15 +1,22 @@
+import { ApolloServer, gql } from 'apollo-server-express'
+import * as fs from 'fs';
+import * as resolvers from './resolvers';
+import {Express} from 'express';
+
+const SCHEMA = './src/graphql/schema.graphql';
+
+const context = ( {req} ) => ( {user: req.user} );
+
 /// inject apollo graphql service
-const { ApolloServer, gql } = require('apollo-server-express');
-const fs = require('fs');
-const typeDefs = gql(fs.readFileSync('./graphql/schema.graphql', {encoding: 'utf-8'}));
-const resolvers = require('./resolvers');
-const context = ( {req} ) => ( {sessionID: req.sessionID, user: req.user} );
-const apolloServer = new ApolloServer({typeDefs, resolvers, context});
-/// Required logic for integrating with Express
-apolloServer.start().then( () => {
-    console.log('graphql service is available with "/graphql" postfix');
-    apolloServer.applyMiddleware({app, path: '/graphql'});
-}).catch( err => {
-    console.log(' graphql service failed');
-    throw err;
-});
+export default function enableGraphQLserver(app: Express, path: string = '/graphql') {
+    const typeDefs = gql(fs.readFileSync(SCHEMA, {encoding: 'utf-8'}));
+    const apolloServer = new ApolloServer({typeDefs, resolvers, context});
+    /// Required logic for integrating with Express
+    apolloServer.start().then( () => {
+        console.log('graphql service is available at ' + path);
+        apolloServer.applyMiddleware({app, path: path});
+    }).catch( err => {
+        console.log('graphql service failed ' + err.message);
+        throw err;
+    });
+}

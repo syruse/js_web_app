@@ -6,6 +6,7 @@ import router from './router/router';
 import { startGrpc, cleanupGrpc } from "./grpc/server";
 import establishConnection from "./kafka/debeziumConnector";
 import { createKafkaConsumer, connectKafkaConsumer, schemaRegistry } from "./kafka/dbWatcher";
+import enableGraphQLserver from "./graphql/server";
 
 require('dotenv').config();
 
@@ -51,6 +52,8 @@ AppDataSource.initialize().then(async () => {
 
     await establishConnection(process.env.KAFKA_DEBEZIUM);
     console.log("debezium-connector established");
+
+    enableGraphQLserver(app);
 
     await connectKafkaConsumer(createKafkaConsumer([process.env.KAFKA_HOST], process.env.KAFKA_GROUP_DB_WATCHER),
         schemaRegistry(process.env.KAFKA_SCHEMA_REGISTRY));

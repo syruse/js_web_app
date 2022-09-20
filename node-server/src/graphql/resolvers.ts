@@ -48,6 +48,8 @@ export const Query = {
             return undefined;
         }
 
+        console.log(JSON.stringify(filters))
+
         filters.forEach(filter => {
             if (filter.values.length < 1) {
                 console.warn("no any value for " + filter.field);
