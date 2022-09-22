@@ -50,7 +50,7 @@ export class Device extends BaseEntity {
     @Column()
     model: string;
 
-    @Column({ type: "varchar", length: 100, unique: true, default: ""})
+    @Column({ type: "varchar", length: 100, default: ""})
     thumbnail: string;
 
     @Column({ type: "decimal", precision: 4, scale: 1, nullable: true })

@@ -1,6 +1,20 @@
 import { Device } from "../entity/Device";
 import { AppDataSource } from '../dataSource';
 
+interface IFilter {
+    field: string,
+    op: string,
+    values: string[]
+}
+
+interface IFiltersExpression {
+    filters: IFilter[]
+}
+
+interface IInput {
+    filterExpression: IFiltersExpression
+}
+
 const parseOperation = (operation: string): string => {
     let parsedOperation = ' = ';
     switch (operation) {
@@ -40,17 +54,18 @@ const parseOperation = (operation: string): string => {
 };
 
 export const Query = {
-    getProducts: async (root, filters, context) => {
+    getProducts: async (root, input:IInput, context) => {
+
+        console.debug("getProducts filter input " + JSON.stringify(input.filterExpression))
+
         let query = AppDataSource.getRepository(Device).createQueryBuilder("devices").leftJoinAndSelect("devices.category", "categories");
-        
-        if (filters.length < 1) {
+       
+        if (input.filterExpression.filters.length < 1) {
             console.error("empty filters");
             return undefined;
         }
 
-        console.log(JSON.stringify(filters))
-
-        filters.forEach(filter => {
+        input.filterExpression.filters.forEach(filter => {
             if (filter.values.length < 1) {
                 console.warn("no any value for " + filter.field);
                 return;
@@ -74,6 +89,8 @@ export const Query = {
                 }
             }
         });
+
+        console.debug("query " + query.getSql());
 
         return await query.getMany();
     }

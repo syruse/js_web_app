@@ -11,7 +11,7 @@ COPY --chown=node:node . .
 #change on USER node for production
 USER root
 
-RUN yarn global add nodemon ts-node
+RUN yarn global add nodemon ts-node typescript
 
 RUN yarn install --frozen-lockfile
 

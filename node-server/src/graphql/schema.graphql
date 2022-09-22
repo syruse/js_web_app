@@ -1,5 +1,5 @@
 type Query {
-    getProducts(filters: FiltersExpression): [Product]
+    getProducts(filterExpression: FiltersExpression): [Product]
 }
 
 type Product {
