@@ -19,11 +19,6 @@ type Product {
     price: Float
 }
 
-enum Operator {
-    AND
-    OR
-}
-
 enum Operation {
     LESS
     GREATER
