@@ -42,58 +42,85 @@ function App() {
             <span className="badge badge-light">{store.cart.length}</span>
         </button>
       </div>
-      <div className="col-sm-8 col-sm-offset-4">
-        {isCartOpened &&
-          <div className="modal show" role="dialog">
-            <div className="modal-dialog modal-dialog-centered modal-lg">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button type="button" className="close fas fa-window-close" data-dismiss="modal" onClick={() => { openCart(false) }} ></button>
-                  <h4 className="modal-title">Cart</h4>
+      <div className="row">
+        <div className="col-sm-4">
+          <div className="panel-group" style={{ paddingLeft: '10%', paddingRight: '10%' }}>
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <div className="panel-title v-align">
+                  <span className="fas fa-list-ul"></span>
+                  <span className="p-1">&nbsp;&nbsp;&nbsp;</span>
+                  <b style={{ width: '80%', fontSize: '130%' }} ><i>Filter</i></b>
+                  <span style={{ width: '20%' }}>
+                    <a data-toggle="collapse" href="#collapse1">
+                      <span className="fas fa-angle-right fa-2x" data-toggle="collapse"></span>
+                    </a>
+                  </span>
                 </div>
-                <div className="modal-body">
-                  <div className="row">
-                    <h2 className="text-center" >Products</h2>
-                    <table className="table-bordered col-sm-6 col-sm-offset-3">
-                      <thead>
-                        <tr>
-                          <th>Model</th>
-                          <th>Description</th>
-                          <th>Price</th>
-                          <th>Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {store.cart.map(product => (
-                          [
-                            <tr key={product.id * 5}>
-                              <td key={product.id * 5 + 1}> {product.brand} </td>
-                              <td key={product.id * 5 + 2}> {product.model}  </td>
-                              <td key={product.id * 5 + 3}> {product.price} </td>
-                              <td key={product.id * 5 + 4}> {product.amount} </td>
-                            </tr>
-                          ]))
-                        }
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-success col-sm-4 col-sm-offset-4" data-dismiss="modal" onClick={() => {
-                    console.debug("purchased"); openCart(false)
-                  }} >Buy</button>
-                </div>
+              </div>
+              <div id="collapse1" className="panel-collapse collapse">
+                <ul className="list-group">
+                  <li className="list-group-item">One</li>
+                  <li className="list-group-item">Two</li>
+                  <li className="list-group-item">Three</li>
+                </ul>
               </div>
             </div>
           </div>
-        }
-        <Routes>
-          <Route exact path="/" element={<GetAll />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/get" element={<Get />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
+        </div>
+        <div className="col-sm-8">
+          {isCartOpened &&
+            <div className="modal show" role="dialog">
+              <div className="modal-dialog modal-dialog-centered modal-lg">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <button type="button" className="close fas fa-window-close" data-dismiss="modal" onClick={() => { openCart(false) }} ></button>
+                    <h4 className="modal-title">Cart</h4>
+                  </div>
+                  <div className="modal-body">
+                    <div className="row">
+                      <h2 className="text-center" >Products</h2>
+                      <table className="table-bordered col-sm-6 col-sm-offset-3">
+                        <thead>
+                          <tr>
+                            <th>Model</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {store.cart.map(product => (
+                            [
+                              <tr key={product.id * 5}>
+                                <td key={product.id * 5 + 1}> {product.brand} </td>
+                                <td key={product.id * 5 + 2}> {product.model}  </td>
+                                <td key={product.id * 5 + 3}> {product.price} </td>
+                                <td key={product.id * 5 + 4}> {product.amount} </td>
+                              </tr>
+                            ]))
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-success col-sm-4 col-sm-offset-4" data-dismiss="modal" onClick={() => {
+                      console.debug("purchased"); openCart(false)
+                    }} >Buy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          <Routes>
+            <Route exact path="/" element={<GetAll />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/get" element={<Get />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </div>
       </div>
       <div className="footer" >
         <div id="chat" className="collapse panel panel-success">
