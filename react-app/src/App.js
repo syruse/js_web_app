@@ -9,6 +9,7 @@ import GetAll from './GetAll';
 import Login from './Login';
 import Register from './Register';
 import Chat from './Chat';
+import Filter from './Filter';
 
 function App() {
   
@@ -43,31 +44,7 @@ function App() {
         </button>
       </div>
       <div className="row">
-        <div className="col-sm-4">
-          <div className="panel-group" style={{ paddingLeft: '10%', paddingRight: '10%' }}>
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <div className="panel-title v-align">
-                  <span className="fas fa-list-ul"></span>
-                  <span className="p-1">&nbsp;&nbsp;&nbsp;</span>
-                  <b style={{ width: '80%', fontSize: '130%' }} ><i>Filter</i></b>
-                  <span style={{ width: '20%' }}>
-                    <a data-toggle="collapse" href="#collapse1">
-                      <span className="fas fa-angle-right fa-2x" data-toggle="collapse"></span>
-                    </a>
-                  </span>
-                </div>
-              </div>
-              <div id="collapse1" className="panel-collapse collapse">
-                <ul className="list-group">
-                  <li className="list-group-item">One</li>
-                  <li className="list-group-item">Two</li>
-                  <li className="list-group-item">Three</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="col-sm-4"><Filter/></div>
         <div className="col-sm-8">
           {isCartOpened &&
             <div className="modal show" role="dialog">
