@@ -1,10 +1,12 @@
 import { Component } from "react";
 import { Method, fetch } from "./utils/fetcher";
+import GraphQlClient from "./utils/graphqlClient";
 
 class Filter extends Component {
     constructor(props){
         super(props)
         this.state = {isCollapsed: false, devicesConfiguration: undefined}
+        this.graphqlClient = new GraphQlClient("http://localhost:8080/graphql")
     }
 
     componentDidMount(){
@@ -24,6 +26,18 @@ class Filter extends Component {
 
     onEmailChange = (e) => {
         this.setState({email:e.target.value})
+    }
+
+    async applySimCriteria(withSim) {
+        const filters = [{
+            field: "sim",
+            op: "EQ",
+            values: [
+                "true"
+            ]
+        }]
+        const products = await this.graphqlClient.getProducts(filters)
+        console.log("getProducts" + JSON.stringify(products))
     }
 
     collapse(){
@@ -56,8 +70,8 @@ class Filter extends Component {
                             <li className="list-group-item">
                                 <div className="form-group v-align">
                                     <label className="control-label" style={{ marginRight: '3%' }}>Sim:</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { }} />no sim</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { }} />with sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { this.applySimCriteria(false) }} />no sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { this.applySimCriteria(true) }} />with sim</label>
                                 </div>
                             </li>
                             <li className="list-group-item">
