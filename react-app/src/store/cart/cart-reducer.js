@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 
 
 const INITIAL_STATE = {
-    cart: [], // contain {id: -1, amount: 0, brand: '', model: ''}
+    cart: [], // contains {id: -1, amount: 0, brand: '', model: ''}
 };
 
 // cart stored in coockie
@@ -12,7 +12,7 @@ const cookiesCart = cookies.get('cart');
 if (cookiesCart) {
     INITIAL_STATE.cart = cookiesCart;
 }
-console.debug("INITIAL_STATE " + JSON.stringify(INITIAL_STATE));
+console.debug("CART INITIAL_STATE " + JSON.stringify(INITIAL_STATE));
 
 export const cartReducer = (state = INITIAL_STATE.cart, action) => {
     const { type, payload } = action;

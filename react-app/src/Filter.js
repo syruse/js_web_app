@@ -1,16 +1,17 @@
 import { Component } from "react";
 import { Method, fetch } from "./utils/fetcher";
-import GraphQlClient from "./utils/graphqlClient";
+import { connect } from "react-redux";
+import { addCriteria, clear } from "./store/filter/filter-action"
 
 class Filter extends Component {
     constructor(props){
         super(props)
         this.state = {isCollapsed: false, devicesConfiguration: undefined}
-        this.graphqlClient = new GraphQlClient("http://localhost:8080/graphql")
     }
 
     componentDidMount(){
         console.debug("Filter app mounted")
+        this.props.clear();
         fetch("http://localhost:8080/api/devices-configuration", undefined, Method.GET)
         .then(res=>{
             console.debug("devices-configuration ", res)
@@ -29,15 +30,14 @@ class Filter extends Component {
     }
 
     async applySimCriteria(withSim) {
-        const filters = [{
+        const criteria = {
             field: "sim",
             op: "EQ",
             values: [
-                "true"
+                withSim ? "true" : "false"
             ]
-        }]
-        const products = await this.graphqlClient.getProducts(filters)
-        console.log("getProducts" + JSON.stringify(products))
+        }
+        this.props.addCriteria(criteria);
     }
 
     collapse(){
@@ -92,4 +92,13 @@ class Filter extends Component {
     }
 }
 
-export default Filter;
+const mapStateToProps = (state) => ({
+    filter: state.filter
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    addCriteria: (criteria) => dispatch(addCriteria(criteria)),
+    clear: () => dispatch(clear())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

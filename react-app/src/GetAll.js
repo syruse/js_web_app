@@ -2,12 +2,13 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { Method, fetch } from "./utils/fetcher";
 import { addItem } from "./store/cart/cart-action"
-
+import GraphQlClient from "./utils/graphqlClient";
 class GetAll extends Component {
 
     constructor(props){
         super(props)
         this.state = {products: []}
+        this.graphqlClient = new GraphQlClient("http://localhost:8080/graphql")
     }
 
     componentDidMount(){
@@ -21,8 +22,17 @@ class GetAll extends Component {
         })
     }
 
-    componentDidUpdate(){
-        console.debug("GetAll app updated with current cart" + JSON.stringify(this.props.cart))
+    async componentDidUpdate(){
+        console.debug("GetAll app updated => new cart: " + JSON.stringify(this.props.cart),
+                      "new filter: " + JSON.stringify(this.props.filter))
+        try {
+            /// FIX me , recursive updating
+            const products = await this.graphqlClient.getProducts(this.props.filter);
+            console.debug("getProducts filtered " + JSON.stringify(products))
+            this.setState( { products } )
+        } catch (error) {
+            console.error("error ", error.message);
+        }
     }
 
     buy(product){
@@ -80,6 +90,7 @@ export default WithNavigate;*/
 
 const mapStateToProps = (state) => ({
     cart: state.cart,
+    filter: state.filter
 });
 
 const mapDispatchToProps = (dispatch) => ({
