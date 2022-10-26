@@ -1,6 +1,7 @@
 import { Device, BrandType, DisplayType, CPUType, StorageType } from "../entity/Device";
 import { AppDataSource } from '../dataSource';
 import { UserInputError } from "apollo-server-express";
+import { GeneralController } from "../controller/generalController";
 
 interface IFilter {
     field: string,
@@ -67,7 +68,8 @@ export const Query = {
         let query = AppDataSource.getRepository(Device).createQueryBuilder("devices").leftJoinAndSelect("devices.category", "categories");
        
         if (input.filterExpression.filters.length < 1) {
-            generateError("empty filters");
+            console.warn("empty filter provided => return all devices by default");
+            return await GeneralController.getDevices();
         }
 
         input.filterExpression.filters.forEach(filter => {

@@ -9,27 +9,28 @@ class GetAll extends Component {
         super(props)
         this.state = {products: []}
         this.graphqlClient = new GraphQlClient("http://localhost:8080/graphql")
+        this.localFilter = this.props.filter;
     }
 
-    componentDidMount(){
+    async getProducts() {
+        const products = await this.graphqlClient.getProducts(this.localFilter);
+        this.setState( { products } )
+        console.debug("getProducts: " + JSON.stringify(products))
+    }
+
+    async componentDidMount(){
         console.debug("GetAll app mounted")
-        fetch("http://localhost:8080/api/devices", undefined, Method.GET)
-        .then(res=>{
-            console.debug("GetAll ", res)
-            this.setState({products:res.data})
-        }).catch(err=>{
-            console.error("error ", err)
-        })
+        this.getProducts();
     }
 
     async componentDidUpdate(){
         console.debug("GetAll app updated => new cart: " + JSON.stringify(this.props.cart),
                       "new filter: " + JSON.stringify(this.props.filter))
         try {
-            /// FIX me , recursive updating
-            const products = await this.graphqlClient.getProducts(this.props.filter);
-            console.debug("getProducts filtered " + JSON.stringify(products))
-            this.setState( { products } )
+            if (this.localFilter !== this.props.filter) {
+                this.localFilter = this.props.filter
+                this.getProducts();
+            }
         } catch (error) {
             console.error("error ", error.message);
         }

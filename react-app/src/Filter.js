@@ -1,7 +1,26 @@
 import { Component } from "react";
 import { Method, fetch } from "./utils/fetcher";
 import { connect } from "react-redux";
-import { addCriteria, clear } from "./store/filter/filter-action"
+import { applyFilter } from "./store/filter/filter-action"
+
+const FilterCollection = { 
+    SIM: {
+           field: "sim",
+           op: "IN",
+           values: []
+        }/*,
+    BRAND: 'brand',
+    MODEL: 'model',
+    DISPLAY_SIZE: 'displaySize',
+    DISPLAY_TYPE: 'displayType',
+    CPU_TYPE: 'cpuType',
+    STORAGE_TYPE: 'storageType',
+    CAMERA_BACK: 'cameraMp',
+    CAMERA_FRONT: 'cameraFrontMp',
+    BATTERY: 'battery_mAh',
+    PRICE: 'price',
+    CATEGORY: 'category'*/
+};
 
 class Filter extends Component {
     constructor(props){
@@ -11,7 +30,6 @@ class Filter extends Component {
 
     componentDidMount(){
         console.debug("Filter app mounted")
-        this.props.clear();
         fetch("http://localhost:8080/api/devices-configuration", undefined, Method.GET)
         .then(res=>{
             console.debug("devices-configuration ", res)
@@ -25,19 +43,35 @@ class Filter extends Component {
         console.debug("Filter app updated")
     }
 
-    onEmailChange = (e) => {
-        this.setState({email:e.target.value})
+    updateFilter() {
+        const filter = [];
+        for (const key in FilterCollection) {
+            // if filter valid
+            if (FilterCollection[key].values.length) {
+                filter.push(FilterCollection[key])
+            }
+        }
+        this.props.applyFilter(filter)
+        console.debug("new filer ", JSON.stringify(filter))
     }
 
-    async applySimCriteria(withSim) {
-        const criteria = {
-            field: "sim",
-            op: "EQ",
-            values: [
-                withSim ? "true" : "false"
-            ]
+    async applySimCriteria(pairKeyValue) {
+        const {key, value} = pairKeyValue;
+        const simAvailability = [];
+        if(key === 'WITH_SIM' && !value) {
+            // with_sim disabled
+        } else if((key === 'WITH_SIM' && value) || FilterCollection.SIM.values.includes('true')) {
+            simAvailability.push('true')
         }
-        this.props.addCriteria(criteria);
+
+        if(key === 'NO_SIM' && !value) {
+           // no_sim disabled
+        } else if((key === 'NO_SIM' && value) || FilterCollection.SIM.values.includes('false')) {
+            simAvailability.push('false')
+        }
+
+        FilterCollection.SIM.values = simAvailability;
+        this.updateFilter();
     }
 
     collapse(){
@@ -70,8 +104,8 @@ class Filter extends Component {
                             <li className="list-group-item">
                                 <div className="form-group v-align">
                                     <label className="control-label" style={{ marginRight: '3%' }}>Sim:</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { this.applySimCriteria(false) }} />no sim</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onClick={() => { this.applySimCriteria(true) }} />with sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key:'NO_SIM', value: e.target.checked}) }} />no sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key:'WITH_SIM', value: e.target.checked}) }} />with sim</label>
                                 </div>
                             </li>
                             <li className="list-group-item">
@@ -97,8 +131,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addCriteria: (criteria) => dispatch(addCriteria(criteria)),
-    clear: () => dispatch(clear())
+    applyFilter: (filter) => dispatch(applyFilter(filter)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
