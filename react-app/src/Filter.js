@@ -8,8 +8,12 @@ const FilterCollection = {
            field: "sim",
            op: "IN",
            values: []
+        } ,
+    BRAND: {
+           field: "brand",
+           op: "IN",
+           values: []
         }/*,
-    BRAND: 'brand',
     MODEL: 'model',
     DISPLAY_SIZE: 'displaySize',
     DISPLAY_TYPE: 'displayType',
@@ -21,6 +25,11 @@ const FilterCollection = {
     PRICE: 'price',
     CATEGORY: 'category'*/
 };
+
+const CONSTANTS = {
+    withSim: 'WITH_SIM',
+    noSim: 'NO_SIM'
+}
 
 class Filter extends Component {
     constructor(props){
@@ -55,22 +64,29 @@ class Filter extends Component {
         console.debug("new filer ", JSON.stringify(filter))
     }
 
-    async applySimCriteria(pairKeyValue) {
+    applySimCriteria(pairKeyValue) {
         const {key, value} = pairKeyValue;
         const simAvailability = [];
-        if(key === 'WITH_SIM' && !value) {
-            // with_sim disabled
-        } else if((key === 'WITH_SIM' && value) || FilterCollection.SIM.values.includes('true')) {
+        if((key === CONSTANTS.withSim && value) || (key !== CONSTANTS.withSim && FilterCollection.SIM.values.includes('true'))) {
             simAvailability.push('true')
         }
 
-        if(key === 'NO_SIM' && !value) {
-           // no_sim disabled
-        } else if((key === 'NO_SIM' && value) || FilterCollection.SIM.values.includes('false')) {
+        if((key === CONSTANTS.noSim && value) || (key !== CONSTANTS.noSim && FilterCollection.SIM.values.includes('false'))) {
             simAvailability.push('false')
         }
 
         FilterCollection.SIM.values = simAvailability;
+        this.updateFilter();
+    }
+
+    applyBrandCriteria(pairBrandAvailability) {
+        const {brand, enabled} = pairBrandAvailability;
+        if (enabled && !FilterCollection.BRAND.values.includes(brand)) {
+            FilterCollection.BRAND.values.push(brand);
+        } else {
+            FilterCollection.BRAND.values = FilterCollection.BRAND.values.filter(_brand => _brand !== brand);
+        }
+
         this.updateFilter();
     }
 
@@ -104,8 +120,8 @@ class Filter extends Component {
                             <li className="list-group-item">
                                 <div className="form-group v-align">
                                     <label className="control-label" style={{ marginRight: '3%' }}>Sim:</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key:'NO_SIM', value: e.target.checked}) }} />no sim</label>
-                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key:'WITH_SIM', value: e.target.checked}) }} />with sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key: CONSTANTS.noSim, value: e.target.checked}) }} />no sim</label>
+                                    <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="sim" onChange={(e) => { this.applySimCriteria({key: CONSTANTS.withSim, value: e.target.checked}) }} />with sim</label>
                                 </div>
                             </li>
                             <li className="list-group-item">
@@ -113,7 +129,7 @@ class Filter extends Component {
                                     <label className="control-label" style={{ marginRight: '3%' }}>Brand:</label>
                                     {this.state.devicesConfiguration?.brand?.map((brand, index) => (
                                         [
-                                            <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="brand" onClick={({ index }) => { }} />{brand}</label> 
+                                            <label className="checkbox-inline control-label" style={{ marginBottom: 'auto' }}><input type="checkbox" name="brand" onChange={(e) => { this.applyBrandCriteria({brand: '' + index, enabled: e.target.checked}) }} />{brand}</label> 
                                         ]))
                                     }
                                 </div>

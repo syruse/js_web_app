@@ -82,89 +82,89 @@ export const Query = {
             switch (filter.field) {
                 case 'sim': {
                     const sqlQuery: string = "devices.sim " + parseOperation(filter.op) + " (:sim) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         sim: filter.values.length === 1 ? filter.values[0].toLowerCase() == 'true' : filter.values.map((value) => value.toLowerCase() == 'true') 
                     });
                     break;
                 }
                 case 'price': {
                     const sqlQuery: string = "devices.price " + parseOperation(filter.op) + " (:price) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         price: filter.values.length === 1 ? parseFloat(filter.values[0]) : filter.values.map((value) => parseFloat(value)) 
                     });
                     break;
                 }
                 case 'displaySize': {
                     const sqlQuery: string = "devices.displaySize " + parseOperation(filter.op) + " (:displaySize) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         displaySize: filter.values.length === 1 ? parseFloat(filter.values[0]) : filter.values.map((value) => parseFloat(value)) 
                     });
                     break;
                 }
                 case 'cameraMp': {
                     const sqlQuery: string = "devices.cameraMp " + parseOperation(filter.op) + " (:cameraMp) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         cameraMp: filter.values.length === 1 ? parseFloat(filter.values[0]) : filter.values.map((value) => parseFloat(value)) 
                     });
                     break;
                 }
                 case 'cameraFrontMp': {
                     const sqlQuery: string = "devices.cameraFrontMp " + parseOperation(filter.op) + " (:cameraFrontMp) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         cameraFrontMp: filter.values.length === 1 ? parseFloat(filter.values[0]) : filter.values.map((value) => parseFloat(value)) 
                     });
                     break;
                 }
                 case 'battery_mAh': {
                     const sqlQuery: string = "devices.battery_mAh " + parseOperation(filter.op) + " (:battery_mAh) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         battery_mAh: filter.values.length === 1 ? parseInt(filter.values[0]) : filter.values.map((value) => parseInt(value)) 
                     });
                     break;
                 }
                 case 'quantity': {
                     const sqlQuery: string = "devices.quantity " + parseOperation(filter.op) + " (:quantity) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         quantity: filter.values.length === 1 ? parseInt(filter.values[0]) : filter.values.map((value) => parseInt(value)) 
                     });
                     break;
                 }
                 case 'model': {
                     const sqlQuery: string = "devices.model " + parseOperation(filter.op) + " (:model) ";
-                    query = query.where(sqlQuery, { 
+                    query = query.andWhere(sqlQuery, { 
                         model: filter.values
                     });
                     break;
                 }
                 case 'brand': {
                     const sqlQuery: string = "devices.brand " + parseOperation(filter.op) + " (:brand) ";
-                    query = query.where(sqlQuery, { 
-                        brand: filter.values.length === 1 ? BrandType[Object.keys(BrandType)[filter.values[0]]]: 
-                               filter.values.map((value) => BrandType[Object.keys(BrandType)[value]]) 
+                    query = query.andWhere(sqlQuery, { 
+                        brand: filter.values.length === 1 ? BrandType[Object.keys(BrandType)[parseInt(filter.values[0])]]: 
+                               filter.values.map((value) => BrandType[Object.keys(BrandType)[parseInt(value)]]) 
                     });
                     break;
                 }
                 case 'displayType': {
                     const sqlQuery: string = "devices.displayType " + parseOperation(filter.op) + " (:displayType) ";
-                    query = query.where(sqlQuery, { 
-                        displayType: filter.values.length === 1 ? DisplayType[Object.keys(DisplayType)[filter.values[0]]]: 
-                               filter.values.map((value) => DisplayType[Object.keys(DisplayType)[value]]) 
+                    query = query.andWhere(sqlQuery, { 
+                        displayType: filter.values.length === 1 ? DisplayType[Object.keys(DisplayType)[parseInt(filter.values[0])]]: 
+                               filter.values.map((value) => DisplayType[Object.keys(DisplayType)[parseInt(value)]]) 
                     });
                     break;
                 }
                 case 'cpuType': {
                     const sqlQuery: string = "devices.cpuType " + parseOperation(filter.op) + " (:cpuType) ";
-                    query = query.where(sqlQuery, { 
-                        cpuType: filter.values.length === 1 ? CPUType[Object.keys(CPUType)[filter.values[0]]]: 
-                               filter.values.map((value) => CPUType[Object.keys(CPUType)[value]]) 
+                    query = query.andWhere(sqlQuery, { 
+                        cpuType: filter.values.length === 1 ? CPUType[Object.keys(CPUType)[parseInt(filter.values[0])]]: 
+                               filter.values.map((value) => CPUType[Object.keys(CPUType)[parseInt(value)]]) 
                     });
                     break;
                 }
                 case 'storageType': {
                     const sqlQuery: string = "devices.storageType " + parseOperation(filter.op) + " (:storageType) ";
-                    query = query.where(sqlQuery, { 
-                        storageType: filter.values.length === 1 ? StorageType[Object.keys(StorageType)[filter.values[0]]]: 
-                               filter.values.map((value) => StorageType[Object.keys(StorageType)[value]]) 
+                    query = query.andWhere(sqlQuery, { 
+                        storageType: filter.values.length === 1 ? StorageType[Object.keys(StorageType)[parseInt(filter.values[0])]]: 
+                               filter.values.map((value) => StorageType[Object.keys(StorageType)[parseInt(value)]]) 
                     });
                     break;
                 }
