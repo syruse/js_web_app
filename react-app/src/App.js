@@ -99,13 +99,14 @@ function App() {
           </Routes>
         </div>
       </div>
-      <div className="footer" >
+      {/* forbid footer comsuming user input, only chat and button allowed, this will not intercept the input devoted to Filter or main content */}
+      <div className="footer" style={{ pointerEvents: 'none' }}>
         <div id="chat" className="collapse panel panel-success">
           <div className="panel-heading">Chat with consultant</div>
-          <div className="panel-body"> <Chat /></div>
+          <div className="panel-body" style={{ pointerEvents: 'auto' }}> <Chat /></div>
         </div>
         <div className="bottom-left">
-          <button className="btn btn-primary" data-toggle="collapse" data-target="#chat">
+          <button className="btn btn-primary" style={{ pointerEvents: 'auto' }} data-toggle="collapse" data-target="#chat">
             <i>chat with consultant</i>
             <span className="p-1">&nbsp;&nbsp;&nbsp;</span>
             <span className="fas fa-comment-dots fa-2x"></span></button>

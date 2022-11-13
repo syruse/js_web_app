@@ -139,32 +139,32 @@ export const Query = {
                 case 'brand': {
                     const sqlQuery: string = "devices.brand " + parseOperation(filter.op) + " (:brand) ";
                     query = query.andWhere(sqlQuery, { 
-                        brand: filter.values.length === 1 ? BrandType[Object.keys(BrandType)[parseInt(filter.values[0])]]: 
-                               filter.values.map((value) => BrandType[Object.keys(BrandType)[parseInt(value)]]) 
+                        brand: filter.values.length === 1 ? BrandType[Object.keys(BrandType)[Object.values(BrandType).indexOf(filter.values[0] as unknown as BrandType)]]: 
+                               filter.values.map((value) => BrandType[Object.keys(BrandType)[Object.values(BrandType).indexOf(value as unknown as BrandType)]]) 
                     });
                     break;
                 }
                 case 'displayType': {
                     const sqlQuery: string = "devices.displayType " + parseOperation(filter.op) + " (:displayType) ";
                     query = query.andWhere(sqlQuery, { 
-                        displayType: filter.values.length === 1 ? DisplayType[Object.keys(DisplayType)[parseInt(filter.values[0])]]: 
-                               filter.values.map((value) => DisplayType[Object.keys(DisplayType)[parseInt(value)]]) 
+                        displayType: filter.values.length === 1 ? DisplayType[Object.keys(DisplayType)[Object.values(DisplayType).indexOf(filter.values[0] as unknown as DisplayType)]]: 
+                               filter.values.map((value) => DisplayType[Object.keys(DisplayType)[Object.values(DisplayType).indexOf(value as unknown as DisplayType)]]) 
                     });
                     break;
                 }
                 case 'cpuType': {
                     const sqlQuery: string = "devices.cpuType " + parseOperation(filter.op) + " (:cpuType) ";
                     query = query.andWhere(sqlQuery, { 
-                        cpuType: filter.values.length === 1 ? CPUType[Object.keys(CPUType)[parseInt(filter.values[0])]]: 
-                               filter.values.map((value) => CPUType[Object.keys(CPUType)[parseInt(value)]]) 
+                        cpuType: filter.values.length === 1 ? CPUType[Object.keys(CPUType)[Object.values(CPUType).indexOf(filter.values[0] as unknown as CPUType)]]: 
+                               filter.values.map((value) => CPUType[Object.keys(CPUType)[Object.values(CPUType).indexOf(value as unknown as CPUType)]]) 
                     });
                     break;
                 }
                 case 'storageType': {
                     const sqlQuery: string = "devices.storageType " + parseOperation(filter.op) + " (:storageType) ";
                     query = query.andWhere(sqlQuery, { 
-                        storageType: filter.values.length === 1 ? StorageType[Object.keys(StorageType)[parseInt(filter.values[0])]]: 
-                               filter.values.map((value) => StorageType[Object.keys(StorageType)[parseInt(value)]]) 
+                        storageType: filter.values.length === 1 ? StorageType[Object.keys(StorageType)[Object.values(StorageType).indexOf(filter.values[0] as unknown as StorageType)]]: 
+                               filter.values.map((value) => StorageType[Object.keys(StorageType)[Object.values(StorageType).indexOf(value as unknown as StorageType)]]) 
                     });
                     break;
                 }
